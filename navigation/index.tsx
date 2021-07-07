@@ -12,11 +12,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
 
-import NotFoundScreen from "../screens/NotFoundScreen";
-import { LoginScreen } from "../screens/LoginScreen";
-import { RootStackParamList } from "../types";
-import BottomTabNavigator from "./BottomTabNavigator";
+import NotFoundScreen from "screens/NotFoundScreen";
+import { LoginScreen } from "screens/LoginScreen";
+import { RootStackParamList } from "types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import BottomTabNavigator from "navigation/BottomTabNavigator";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
 export default function Navigation({
   colorScheme,
@@ -24,12 +27,17 @@ export default function Navigation({
   colorScheme: ColorSchemeName;
 }) {
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <RootNavigator />
-    </NavigationContainer>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <NavigationContainer
+          linking={LinkingConfiguration}
+          theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <RootNavigator />
+        </NavigationContainer>
+      </ApplicationProvider>
+    </>
   );
 }
 
