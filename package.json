@@ -14,6 +14,7 @@
   "dependencies": {
     "@eva-design/eva": "^2.1.0",
     "@expo/vector-icons": "^12.0.0",
+    "@gorhom/bottom-sheet": "^3.6.6",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "5.11.2",
     "@react-navigation/native": "~5.8.10",
@@ -25,10 +26,12 @@
     "expo-application": "^3.2.0",
     "expo-asset": "~8.3.2",
     "expo-auth-session": "~3.3.1",
+    "expo-blur": "~9.0.3",
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
     "expo-google-sign-in": "~9.2.1",
     "expo-linking": "~2.3.1",
+    "expo-location": "~12.1.2",
     "expo-random": "~11.2.0",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
@@ -37,11 +40,13 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-maps": "0.28.0",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-svg": "^12.1.1",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

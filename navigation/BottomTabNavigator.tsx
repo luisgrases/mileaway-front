@@ -13,6 +13,8 @@ import useColorScheme from "../hooks/useColorScheme";
 import { DashboardScreen } from "screens/DashboardScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
+import { Text } from "react-native";
+import { Toggle } from "@ui-kitten/components";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -66,7 +68,12 @@ function TabOneNavigator() {
         name="DashboardScreen"
         component={DashboardScreen}
         options={{
-          headerTitle: "Friends Nearby",
+          headerShown: false,
+          headerRight: () => (
+            <Toggle>
+              {(evaProps) => <Text {...evaProps}>Not Sharing</Text>}
+            </Toggle>
+          ),
         }}
       />
     </TabOneStack.Navigator>

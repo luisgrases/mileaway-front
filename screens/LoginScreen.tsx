@@ -30,10 +30,14 @@ export const LoginScreen = ({ navigation }: StackScreenProps<any>) => {
     // navigation.replace("Root");
   };
 
+  const fakeLogin = () => {
+    navigation.replace("Root");
+  };
+
   return (
     <SafeAreaView>
       <Text>Login Screen!</Text>
-      <Button onPress={login}>Login</Button>
+      <Button onPress={fakeLogin}>Login</Button>
     </SafeAreaView>
   );
 };
