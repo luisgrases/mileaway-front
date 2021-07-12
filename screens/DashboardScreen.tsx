@@ -1,7 +1,6 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Dimensions, SafeAreaView, StyleSheet } from "react-native";
-import BottomSheet from "reanimated-bottom-sheet";
-import { Flexbox, Content, BlurView } from "components";
+import React, { useEffect, useRef, useState } from "react";
+import { SafeAreaView } from "react-native";
+import { Flexbox, Content, BottomSheet } from "components";
 import {
   Card,
   Divider,
@@ -151,96 +150,63 @@ export function DashboardScreen() {
       </SafeAreaView>
       <BottomSheet
         snapPoints={[450, "85%"]}
-        borderRadius={15}
         renderContent={() => (
           <>
-            <View
-              style={{
-                backgroundColor: "transparent",
-                paddingTop: 5,
-              }}
-            ></View>
-            <View
-              style={{
-                shadowOffset: { width: 0, height: 2 },
-                shadowColor: "#000",
-                shadowOpacity: 0.2,
-                elevation: 5,
-                zIndex: 30,
-                borderRadius: 15,
-              }}
-            >
-              <BlurView style={{ borderRadius: 10 }}>
-                <Flexbox justify="center" style={{ marginTop: 14 }}>
-                  <View
-                    style={{
-                      backgroundColor: "lightgray",
-                      width: 35,
-                      height: 4,
-                      borderRadius: 5,
-                    }}
-                  ></View>
-                </Flexbox>
-                <Content>
-                  <Text category="h6">People</Text>
-                </Content>
-                <Divider style={{ backgroundColor: "lightgray" }} />
-                <Content>
-                  <Card appearance="outline" style={{ marginTop: 20 }}>
+            <Content>
+              <Text category="h6">People</Text>
+            </Content>
+            <Divider style={{ backgroundColor: "lightgray" }} />
+            <Content>
+              <Card appearance="outline" style={{ marginTop: 20 }}>
+                <Flexbox direction="column">
+                  <Flexbox align="center" justify="space-between">
                     <Flexbox direction="column">
-                      <Flexbox align="center" justify="space-between">
-                        <Flexbox direction="column">
-                          <Text>Share My Location</Text>
-                          <Text category="c1" appearance="hint">
-                            1 Mile Radius
-                          </Text>
-                        </Flexbox>
-                        <Toggle
-                          checked={isSharingLocation}
-                          onChange={(isChecked) =>
-                            setIsSharingLocation(isChecked)
-                          }
-                        />
-                      </Flexbox>
-
-                      <Divider
-                        style={{
-                          alignSelf: "stretch",
-                          marginTop: 10,
-                          marginBottom: 10,
-                        }}
-                      />
-
-                      {isSharingLocation ? (
-                        <Text category="p2" appearance="hint">
-                          You are currently sharing your location. Once any of
-                          your friends are nearby, they will appear below. At
-                          the same time, you will appear at their list of
-                          friends nearby. The exact location of either party
-                          will never be shared.
-                        </Text>
-                      ) : (
-                        <Text category="p2" appearance="hint">
-                          {" "}
-                          You are currently not sharing your location. No one
-                          can see you and you can see no one.
-                        </Text>
-                      )}
+                      <Text>Share My Location</Text>
+                      <Text category="c1" appearance="hint">
+                        1 Mile Radius
+                      </Text>
                     </Flexbox>
-                  </Card>
+                    <Toggle
+                      checked={isSharingLocation}
+                      onChange={(isChecked) => setIsSharingLocation(isChecked)}
+                    />
+                  </Flexbox>
 
-                  <List
-                    style={{ marginTop: 20 }}
-                    data={response}
-                    renderItem={renderItem}
-                    ItemSeparatorComponent={Divider}
-                    keyExtractor={(item) => {
-                      return String(item.id);
+                  <Divider
+                    style={{
+                      alignSelf: "stretch",
+                      marginTop: 10,
+                      marginBottom: 10,
                     }}
                   />
-                </Content>
-              </BlurView>
-            </View>
+
+                  {isSharingLocation ? (
+                    <Text category="p2" appearance="hint">
+                      You are currently sharing your location. Once any of your
+                      friends are nearby, they will appear below. At the same
+                      time, you will appear at their list of friends nearby. The
+                      exact location of either party will never be shared.
+                    </Text>
+                  ) : (
+                    <Text category="p2" appearance="hint">
+                      {" "}
+                      You are currently not sharing your location. No one can
+                      see you and you can see no one.
+                    </Text>
+                  )}
+                </Flexbox>
+              </Card>
+
+              <List
+                style={{ marginTop: 20 }}
+                data={response}
+                renderItem={renderItem}
+                ItemSeparatorComponent={Divider}
+                keyExtractor={(item) => {
+                  return String(item.id);
+                }}
+              />
+            </Content>
           </>
         )}
       />

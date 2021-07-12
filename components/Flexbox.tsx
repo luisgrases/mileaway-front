@@ -1,6 +1,6 @@
 import { View } from "./View";
 import React from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp } from "react-native";
 
 type Props = {
   justify?: React.CSSProperties["justifyContent"];
