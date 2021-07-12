@@ -1,31 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, Dimensions, StyleSheet } from "react-native";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Dimensions, SafeAreaView, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 import {
-  List,
+  Card,
   Divider,
+  List,
   ListItem,
   Text,
-  Card,
-  Icon,
-  Layout,
+  useTheme,
   Toggle,
 } from "@ui-kitten/components";
+import * as Location from "expo-location";
 import MapView from "react-native-maps";
 import { BlurView } from "expo-blur";
-import { format, formatDistanceToNow } from "date-fns";
-
-import EditScreenInfo from "components/EditScreenInfo";
+import { formatDistanceToNow } from "date-fns";
 import { useMockSendRequest } from "hooks/useMockSendRequest";
 
 import { View } from "components/Themed";
-import { Header } from "@react-navigation/stack";
+
+const FAKE_LOCATION = {
+  lat: 9.931423120648843,
+  lon: -84.14629818877998,
+};
 
 export function DashboardScreen() {
+  const mapRef = useRef<MapView>(null);
+  const theme = useTheme();
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [send, { response, isLoading }] = useMockSendRequest([
     { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
     { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
   ]);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestBackgroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      Location.watchPositionAsync(
+        { accuracy: Location.Accuracy.High },
+        (location) => {
+          setLocation(location);
+        }
+      );
+    })();
+  }, []);
 
   const [isSharingLocation, setIsSharingLocation] = useState(true);
 
@@ -45,22 +68,91 @@ export function DashboardScreen() {
       )} ago`}
     />
   );
+  console.log("lon", location);
 
   return (
     <>
       <SafeAreaView>
-        <View>
+        <View style={{ position: "relative" }}>
           <MapView
+            mapPadding={{ top: 0, right: 0, bottom: 450, left: 0 }}
+            ref={mapRef}
+            provider="google"
+            minZoomLevel={13}
+            maxZoomLevel={13}
+            scrollEnabled={false}
+            zoomEnabled={false}
+            zoomTapEnabled={false}
+            zoomControlEnabled={false}
+            rotateEnabled={false}
+            region={{
+              latitudeDelta: 0,
+              longitudeDelta: 0,
+              latitude: FAKE_LOCATION.lat,
+              longitude: FAKE_LOCATION.lon,
+            }}
             style={{
-              width: Dimensions.get("window").width,
-              height: Dimensions.get("window").height,
+              width: "100%",
+              height: "100%",
             }}
           />
+
+          <Flexbox
+            style={{
+              width: "100%",
+              position: "absolute",
+              top: 0,
+              bottom: 450,
+            }}
+            align="center"
+            justify="center"
+          >
+            <Flexbox
+              style={{
+                position: "absolute",
+                borderRadius: 320,
+                width: 150,
+                height: 150,
+                backgroundColor: isSharingLocation
+                  ? theme["color-primary-default"]
+                  : "gray",
+                opacity: 0.2,
+              }}
+              align="center"
+              justify="center"
+              selfAlign="center"
+            />
+            <Flexbox
+              style={{
+                position: "relative",
+                borderRadius: 10,
+                width: 20,
+                height: 20,
+                backgroundColor: "white",
+                shadowOffset: { width: 0, height: 2 },
+                shadowColor: "#000",
+                shadowOpacity: 0.2,
+                elevation: 5,
+              }}
+              align="center"
+              justify="center"
+              selfAlign="center"
+            >
+              <View
+                style={{
+                  borderRadius: 10,
+                  width: 10,
+                  height: 10,
+                  backgroundColor: theme["color-primary-default"],
+                }}
+              />
+            </Flexbox>
+          </Flexbox>
         </View>
       </SafeAreaView>
       <BottomSheet
         snapPoints={[450, "85%"]}
-        borderRadius={10}
+        borderRadius={15}
         renderContent={() => (
           <>
             <View
@@ -76,16 +168,16 @@ export function DashboardScreen() {
                 shadowOpacity: 0.2,
                 elevation: 5,
                 zIndex: 30,
-                borderRadius: 20,
+                borderRadius: 15,
               }}
             >
-              <CustomBlurView style={{ borderRadius: 20 }}>
+              <CustomBlurView style={{ borderRadius: 10 }}>
                 <Flexbox justify="center" style={{ marginTop: 14 }}>
                   <View
                     style={{
                       backgroundColor: "lightgray",
-                      width: 30,
-                      height: 5,
+                      width: 35,
+                      height: 4,
                       borderRadius: 5,
                     }}
                   ></View>
@@ -188,6 +280,7 @@ const Flexbox = ({
   justify = "flex-start",
   align = "flex-start",
   direction = "row",
+  selfAlign = "stretch",
   style,
 }) => {
   return (
@@ -196,7 +289,7 @@ const Flexbox = ({
         display: "flex",
         justifyContent: justify,
         alignItems: align,
-        alignSelf: "stretch",
+        alignSelf: selfAlign,
         flexDirection: direction,
         backgroundColor: "transparent",
         ...style,
@@ -206,14 +299,3 @@ const Flexbox = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  shadow: {
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: "black",
-    shadowOpacity: 1,
-    elevation: 3,
-    // background color must be set
-    backgroundColor: "#0000", // invisible color
-  },
-});
