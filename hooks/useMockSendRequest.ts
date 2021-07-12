@@ -48,5 +48,5 @@ const fakeApiRequest = (response: any, err: any) =>
         reject(err);
       }
       return resolve(response);
-    }, 0);
+    }, 2000);
   });

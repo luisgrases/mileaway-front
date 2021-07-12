@@ -7,3 +7,4 @@ export { Card, List, ListItem, useTheme, Toggle } from "@ui-kitten/components";
 export { Divider } from "./Divider";
 export { SafeAreaView } from "react-native";
 export { Text } from "./Text";
+export { EmptyStreet } from "./EmptyStreet";

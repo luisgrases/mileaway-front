@@ -22,23 +22,30 @@ export const BottomSheet: React.FC<any> = ({
               backgroundColor: "transparent",
               paddingTop: 5,
             }}
-          ></View>
-          <View
-            style={{
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: "#000",
-              shadowOpacity: 0.2,
-              elevation: 5,
-              zIndex: 30,
-              borderRadius: BORDER_RADIUS,
-            }}
           >
-            <BlurView style={{ borderRadius: BORDER_RADIUS }}>
-              <Flexbox justify="center" style={{ marginTop: 14 }}>
-                <DraggableIcon />
-              </Flexbox>
-              {renderContent()}
-            </BlurView>
+            <View
+              style={{
+                shadowOffset: { width: 0, height: 2 },
+                shadowColor: "#000",
+                shadowOpacity: 0.2,
+                elevation: 5,
+                zIndex: 30,
+                borderTopLeftRadius: BORDER_RADIUS,
+                borderTopRightRadius: BORDER_RADIUS,
+              }}
+            >
+              <BlurView
+                style={{
+                  borderTopLeftRadius: BORDER_RADIUS,
+                  borderTopRightRadius: BORDER_RADIUS,
+                }}
+              >
+                <Flexbox justify="center" style={{ marginTop: 14 }}>
+                  <DraggableIcon />
+                </Flexbox>
+                {renderContent()}
+              </BlurView>
+            </View>
           </View>
         </>
       )}

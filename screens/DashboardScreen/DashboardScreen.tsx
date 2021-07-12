@@ -12,12 +12,15 @@ import {
   Toggle,
   SafeAreaView,
   View,
+  EmptyStreet,
 } from "components";
 
+import { ScrollView } from "react-native";
 import * as Location from "expo-location";
 import { formatDistanceToNow } from "date-fns";
 import { useMockSendRequest } from "hooks/useMockSendRequest";
 import { DashboardMap } from "screens/DashboardScreen/DashboardMap";
+import { Spinner } from "@ui-kitten/components";
 
 const FAKE_LOCATION = {
   lat: 9.931423120648843,
@@ -29,6 +32,18 @@ export function DashboardScreen() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [send, { response, isLoading }] = useMockSendRequest([
+    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
+    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
+    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
+    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
+    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
+    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
+    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
+    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
+    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
+    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
+    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
+    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
     { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
     { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
   ]);
@@ -62,6 +77,7 @@ export function DashboardScreen() {
     item: { id: number; username: string; lastSeen: string };
   }) => (
     <ListItem
+      disabled
       style={{
         paddingLeft: 22,
         borderWidth: 1,
@@ -146,21 +162,45 @@ export function DashboardScreen() {
                   )}
                 </Flexbox>
               </Card>
-
-              <List
-                style={{
-                  marginTop: 20,
-                  backgroundColor: "transparent",
-                  height: "100%",
-                }}
-                data={response}
-                renderItem={renderItem}
-                ItemSeparatorComponent={() => <View style={{ height: 3 }} />}
-                keyExtractor={(item) => {
-                  return String(item.id);
-                }}
-              />
             </Content>
+            <ScrollView>
+              <Content>
+                {isSharingLocation && isLoading && (
+                  <Flexbox justify="center" align="center">
+                    <Spinner />
+                  </Flexbox>
+                )}
+                {isSharingLocation && response && response.length == 0 && (
+                  <Flexbox direction="column" align="center">
+                    <EmptyStreet />
+                    <Text appearance="info" size="large" weight="medium">
+                      Nobody around
+                    </Text>
+                    <Text
+                      style={{ marginTop: 10 }}
+                      appearance="info"
+                      align="center"
+                    >
+                      Once any of your contacts is nearby, they will appear
+                      here.
+                    </Text>
+                  </Flexbox>
+                )}
+
+                {isSharingLocation && response && response.length > 0 && (
+                  <List
+                    data={response}
+                    renderItem={renderItem}
+                    ItemSeparatorComponent={() => (
+                      <View style={{ height: 3 }} />
+                    )}
+                    keyExtractor={(item) => {
+                      return String(item.id);
+                    }}
+                  />
+                )}
+              </Content>
+            </ScrollView>
           </>
         )}
       />

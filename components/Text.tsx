@@ -19,15 +19,17 @@ export const Text: React.FC<Props> = ({
   appearance = "default",
   size = "regular",
   weight = "regular",
+  align = "left",
   style,
   ...props
 }) => {
   return (
     <NativeText
       style={[
-        styles.text,
         styles[`appearance--${appearance}`],
         styles[`size--${size}`],
+        styles[`align--${align}`],
+        styles[`align--${align}`],
         styles[`weight--${weight}`],
         style,
       ]}
@@ -37,7 +39,9 @@ export const Text: React.FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
-  text: { textAlign: "left" },
+  "align--left": { textAlign: "left" },
+  "align--center": { textAlign: "center" },
+  "align--right": { textAlign: "right" },
   "appearance--default": { color: "black" },
   "appearance--info": { color: "#8F9BB3" },
   "size--xsmall": { fontSize: 12 },
