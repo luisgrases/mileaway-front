@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Dimensions, SafeAreaView, StyleSheet } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
+import { Flexbox, Content, BlurView } from "components";
 import {
   Card,
   Divider,
@@ -12,7 +13,6 @@ import {
 } from "@ui-kitten/components";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
-import { BlurView } from "expo-blur";
 import { formatDistanceToNow } from "date-fns";
 import { useMockSendRequest } from "hooks/useMockSendRequest";
 
@@ -42,7 +42,7 @@ export function DashboardScreen() {
       }
 
       Location.watchPositionAsync(
-        { accuracy: Location.Accuracy.High },
+        { accuracy: Location.Accuracy.High, timeInterval: 5000 },
         (location) => {
           setLocation(location);
         }
@@ -68,7 +68,6 @@ export function DashboardScreen() {
       )} ago`}
     />
   );
-  console.log("lon", location);
 
   return (
     <>
@@ -171,7 +170,7 @@ export function DashboardScreen() {
                 borderRadius: 15,
               }}
             >
-              <CustomBlurView style={{ borderRadius: 10 }}>
+              <BlurView style={{ borderRadius: 10 }}>
                 <Flexbox justify="center" style={{ marginTop: 14 }}>
                   <View
                     style={{
@@ -240,7 +239,7 @@ export function DashboardScreen() {
                     }}
                   />
                 </Content>
-              </CustomBlurView>
+              </BlurView>
             </View>
           </>
         )}
@@ -248,54 +247,3 @@ export function DashboardScreen() {
     </>
   );
 }
-
-const CustomBlurView = ({ children, style }) => {
-  return (
-    <View style={{ overflow: "hidden", ...style }}>
-      <BlurView style={{ height: "100%" }} intensity={85} tint="light">
-        <BlurView style={{ height: "100%" }} intensity={85} tint="light">
-          {children}
-        </BlurView>
-      </BlurView>
-    </View>
-  );
-};
-
-const Content = ({ children }) => {
-  return (
-    <View
-      style={{
-        marginHorizontal: 20,
-        marginVertical: 10,
-        backgroundColor: "transparent",
-      }}
-    >
-      {children}
-    </View>
-  );
-};
-
-const Flexbox = ({
-  children,
-  justify = "flex-start",
-  align = "flex-start",
-  direction = "row",
-  selfAlign = "stretch",
-  style,
-}) => {
-  return (
-    <View
-      style={{
-        display: "flex",
-        justifyContent: justify,
-        alignItems: align,
-        alignSelf: selfAlign,
-        flexDirection: direction,
-        backgroundColor: "transparent",
-        ...style,
-      }}
-    >
-      {children}
-    </View>
-  );
-};
