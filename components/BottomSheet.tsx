@@ -15,7 +15,6 @@ export const BottomSheet: React.FC<any> = ({
   return (
     <ReanimatedBottomSheet
       snapPoints={snapPoints}
-      borderRadius={BORDER_RADIUS}
       renderContent={() => (
         <>
           <View
@@ -54,7 +53,7 @@ const DraggableIcon = () => {
       style={{
         backgroundColor: "lightgray",
         width: 35,
-        height: 4,
+        height: 5,
         borderRadius: 5,
       }}
     ></View>
