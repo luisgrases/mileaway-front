@@ -11,7 +11,7 @@ import * as React from "react";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { DashboardScreen } from "screens/DashboardScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import { Friends } from "screens/Friends";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 import { Text } from "react-native";
 import {
@@ -96,7 +96,7 @@ function TabTwoNavigator() {
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
         name="TabTwoScreen"
-        component={TabTwoScreen}
+        component={Friends}
         options={{ headerTitle: "Tab Two Title" }}
       />
     </TabTwoStack.Navigator>

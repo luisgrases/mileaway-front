@@ -66,22 +66,10 @@ export function DashboardScreen() {
   }) => (
     <ListItem
       disabled
-      style={{
-        paddingLeft: 22,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: theme["border-basic-color-4"],
-      }}
-      title={() => <Text weight="medium">{item.username}</Text>}
-      description={() => (
-        <Text
-          style={{ marginTop: 3 }}
-          size="small"
-          appearance="info"
-        >{`Last seen nearby: ${formatDistanceToNow(
-          new Date(item.lastSeen)
-        )} ago`}</Text>
-      )}
+      title={item.username}
+      description={`Last seen nearby: ${formatDistanceToNow(
+        new Date(item.lastSeen)
+      )} ago`}
     />
   );
 
@@ -179,9 +167,6 @@ export function DashboardScreen() {
                   <List
                     data={response}
                     renderItem={renderItem}
-                    ItemSeparatorComponent={() => (
-                      <View style={{ height: 3 }} />
-                    )}
                     keyExtractor={(item) => {
                       return String(item.id);
                     }}
