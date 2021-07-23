@@ -32,7 +32,7 @@ export default function Navigation({
       <ApplicationProvider {...eva} theme={eva.light}>
         <NavigationContainer
           linking={LinkingConfiguration}
-          theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          theme={DefaultTheme}
         >
           <RootNavigator />
         </NavigationContainer>

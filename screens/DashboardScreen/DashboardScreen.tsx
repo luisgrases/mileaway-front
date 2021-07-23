@@ -34,18 +34,6 @@ export function DashboardScreen() {
   const [send, { response, isLoading }] = useMockSendRequest([
     { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
     { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
   ]);
 
   useEffect(() => {

@@ -14,7 +14,13 @@ import { DashboardScreen } from "screens/DashboardScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 import { Text } from "react-native";
-import { Toggle } from "@ui-kitten/components";
+import {
+  Icon,
+  IconProps,
+  IconRegistry,
+  Toggle,
+  useTheme,
+} from "@ui-kitten/components";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -24,14 +30,14 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Dashboard"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBarOptions={{ activeTintColor: Colors["light"].primary }}
     >
       <BottomTab.Screen
         name="Dashboard"
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="navigation-2-outline" color={color} />
           ),
         }}
       />
@@ -40,7 +46,7 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="people-outline" color={color} />
           ),
         }}
       />
@@ -50,11 +56,14 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>["name"];
-  color: string;
-}) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: { name: IconProps["name"]; color: string }) {
+  return (
+    <Icon
+      style={{ width: 30, height: 30 }}
+      fill={props.color}
+      name={props.name}
+    />
+  );
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
