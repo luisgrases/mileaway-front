@@ -20,6 +20,7 @@ import * as eva from "@eva-design/eva";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import BottomTabNavigator from "navigation/BottomTabNavigator";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { FindFriends } from "screens/FindFriends";
 
 export default function Navigation({
   colorScheme,
@@ -50,6 +51,11 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen
+        name="FindFriendsScreen"
+        component={FindFriends}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

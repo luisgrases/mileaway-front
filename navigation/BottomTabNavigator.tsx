@@ -12,8 +12,10 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { DashboardScreen } from "screens/DashboardScreen";
 import { Friends } from "screens/Friends";
+import { Settings } from "screens/Settings";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 import { Text } from "react-native";
+
 import {
   Icon,
   IconProps,
@@ -48,6 +50,15 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="people-outline" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={TabThreeNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="settings-2-outline" color={color} />
           ),
         }}
       />
@@ -100,11 +111,20 @@ function TabTwoNavigator() {
         component={Friends}
         options={{ headerShown: false }}
       />
+    </TabTwoStack.Navigator>
+  );
+}
+
+const TabThreeStack = createStackNavigator<TabTwoParamList>();
+
+function TabThreeNavigator() {
+  return (
+    <TabThreeStack.Navigator>
       <TabTwoStack.Screen
-        name="FindFriendsScreen"
-        component={FindFriends}
+        name="Profile"
+        component={Settings}
         options={{ headerShown: false }}
       />
-    </TabTwoStack.Navigator>
+    </TabThreeStack.Navigator>
   );
 }
