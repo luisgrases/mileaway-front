@@ -31,10 +31,7 @@ export function DashboardScreen() {
   const theme = useTheme();
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [send, { response, isLoading }] = useMockSendRequest([
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-  ]);
+  const [send, { response, isLoading }] = useMockSendRequest([]);
 
   useEffect(() => {
     (async () => {
@@ -75,13 +72,13 @@ export function DashboardScreen() {
 
   return (
     <>
-      <SafeAreaView>
+      <View>
         <DashboardMap
           isSharingLocation={isSharingLocation}
           lat={FAKE_LOCATION.lat}
           lon={FAKE_LOCATION.lon}
         />
-      </SafeAreaView>
+      </View>
       <BottomSheet
         snapPoints={[450, "85%"]}
         renderContent={() => (

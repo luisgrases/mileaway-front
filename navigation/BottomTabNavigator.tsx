@@ -21,6 +21,7 @@ import {
   Toggle,
   useTheme,
 } from "@ui-kitten/components";
+import { FindFriends } from "screens/FindFriends";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -97,7 +98,12 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={Friends}
-        options={{ headerTitle: "Tab Two Title" }}
+        options={{ headerShown: false }}
+      />
+      <TabTwoStack.Screen
+        name="FindFriendsScreen"
+        component={FindFriends}
+        options={{ headerShown: false }}
       />
     </TabTwoStack.Navigator>
   );
