@@ -146,10 +146,11 @@ export function DashboardScreen() {
                 {isSharingLocation && response && response.length == 0 && (
                   <Flexbox direction="column" align="center">
                     <EmptyStreet />
-                    <Text appearance="info" size="large" weight="medium">
+                    <Text appearance="info" size="regular" weight="medium">
                       Nobody around
                     </Text>
                     <Text
+                      size="small"
                       style={{ marginTop: 10 }}
                       appearance="info"
                       align="center"

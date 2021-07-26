@@ -51,8 +51,7 @@ export const Friends = ({ navigation }) => {
   return (
     <SafeAreaView>
       <Content>
-        <Flexbox justify="space-between" align="center">
-          <Header level={3}>People</Header>
+        <Flexbox justify="flex-end" align="center">
           <Icon
             onPress={() => navigation.push("FindFriendsScreen")}
             style={{ width: 25, height: 25 }}
@@ -65,13 +64,9 @@ export const Friends = ({ navigation }) => {
           <Header level={5} style={{ marginBottom: 10, marginTop: 10 }}>
             Friend Requests
           </Header>
-          {isLoading && (
-            <Flexbox justify="center" align="center">
-              <Spinner />
-            </Flexbox>
-          )}
 
           <List
+            isLoading={isLoading}
             data={response}
             renderItem={(item) => (
               <ListItem
@@ -79,14 +74,25 @@ export const Friends = ({ navigation }) => {
                 description="Last time online: 12 minutes ago"
                 accessoryRight={() => {
                   return (
-                    <Button
-                      status="primary"
-                      appearance="outline"
-                      size="tiny"
-                      onPress={(hey) => onDeleteFriendPress(item.item)}
-                    >
-                      Accept
-                    </Button>
+                    <>
+                      <Button
+                        status="primary"
+                        appearance="outline"
+                        size="tiny"
+                        onPress={(hey) => onDeleteFriendPress(item.item)}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        style={{ marginLeft: 10 }}
+                        status="danger"
+                        appearance="outline"
+                        size="tiny"
+                        onPress={(hey) => onDeleteFriendPress(item.item)}
+                      >
+                        Reject
+                      </Button>
+                    </>
                   );
                 }}
               />
@@ -96,13 +102,9 @@ export const Friends = ({ navigation }) => {
           <Header level={5} style={{ marginBottom: 10, marginTop: 10 }}>
             Friends
           </Header>
-          {isLoading && (
-            <Flexbox justify="center" align="center">
-              <Spinner />
-            </Flexbox>
-          )}
 
           <List
+            isLoading={isLoading}
             data={response}
             renderItem={(item) => (
               <ListItem

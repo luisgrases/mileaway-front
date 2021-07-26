@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Content, Header, Flexbox, List, ListItem, Button } from "components";
+import {
+  Content,
+  Header,
+  Flexbox,
+  List,
+  ListItem,
+  Button,
+  Text,
+} from "components";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Icon, Input, Spinner } from "@ui-kitten/components";
 import { useDebounce } from "use-debounce";
@@ -49,7 +57,12 @@ export const FindFriends = ({ navigation }) => {
               <Spinner />
             </Flexbox>
           )}
-          {!isLoading && !response && <SearchFriends width="80%" />}
+
+          {!isLoading && !response && (
+            <Flexbox align="center" justify="center" direction="column">
+              <SearchFriends height="200" />
+            </Flexbox>
+          )}
           <List
             scrollEnabled={false}
             data={response}
