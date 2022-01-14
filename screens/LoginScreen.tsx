@@ -5,11 +5,9 @@ import * as WebBrowser from "expo-web-browser";
 import { Button, Text } from "@ui-kitten/components";
 import * as Google from "expo-auth-session/providers/google";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
+import { GOOGLE_GUID_EXPO_GO_DEVELOPMENT } from "globals";
 
 WebBrowser.maybeCompleteAuthSession();
-
-const GOOGLE_GUID_EXPO_GO_DEVELOPMENT =
-  "620044273363-50n2qjasgo5vmduhl3dalcd3lceto24c.apps.googleusercontent.com";
 
 export const LoginScreen = ({ navigation }: StackScreenProps<any>) => {
   const [request, response, promptAsync] = Google.useAuthRequest({
