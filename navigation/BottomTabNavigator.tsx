@@ -11,7 +11,7 @@ import * as React from "react";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { DashboardScreen } from "screens/DashboardScreen";
-import { Friends } from "screens/Friends";
+import { Friends } from "screens/Friends/Friends";
 import { Settings } from "screens/Settings";
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
 import { Text } from "react-native";
