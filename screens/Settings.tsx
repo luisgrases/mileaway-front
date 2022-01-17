@@ -1,6 +1,14 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import { Content, Button, Flexbox, Header, Text, ListItem } from "components";
+import {
+  Content,
+  Button,
+  Flexbox,
+  Header,
+  Text,
+  ListItemDeprecated,
+  List,
+} from "components";
 import { Card } from "@ui-kitten/components";
 
 export const Settings = () => {
@@ -21,7 +29,7 @@ export const Settings = () => {
           </Flexbox>
         </Card>
 
-        <ListItem
+        <List.Item
           title="Terms and Conditions"
           onPress={() => console.log("hello")}
         />

@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Content,
-  Header,
-  Flexbox,
-  List,
-  ListItem,
-  Button,
-  Text,
-} from "components";
+import { Content, Header, Flexbox, Button, List } from "components";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Icon, Input, Spinner } from "@ui-kitten/components";
 import { useDebounce } from "use-debounce";
@@ -23,8 +15,6 @@ export const FindFriends = ({ navigation }) => {
     { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
     { id: 3, username: "luisgra", lastSeen: new Date().toISOString() },
   ]);
-
-  console.log("value", value);
 
   useEffect(() => {
     if (value) {
@@ -63,14 +53,13 @@ export const FindFriends = ({ navigation }) => {
               <SearchFriends height="200" />
             </Flexbox>
           )}
-          <List
-            scrollEnabled={false}
-            data={response}
-            renderItem={(item) => (
-              <ListItem
-                title={item.item.username}
+
+          <List.Section>
+            {response?.map((item) => (
+              <List.Item
+                title={item?.username}
                 description="Last time online: 12 minutes ago"
-                accessoryRight={() => {
+                right={() => {
                   return (
                     <Button status="primary" appearance="outline" size="tiny">
                       Add
@@ -78,8 +67,8 @@ export const FindFriends = ({ navigation }) => {
                   );
                 }}
               />
-            )}
-          />
+            ))}
+          </List.Section>
         </ScrollView>
       </Content>
     </SafeAreaView>

@@ -41,7 +41,7 @@ export const useMockSendRequest: UseMockSendRequest = (mockResponse, err?) => {
   return [send, { response, isLoading, error }];
 };
 
-const fakeApiRequest = (response: any, err: any) =>
+export const fakeApiRequest = (response: any, err?: any): any =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
       if (err) {

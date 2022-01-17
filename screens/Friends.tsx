@@ -4,12 +4,13 @@ import {
   SafeAreaView,
   Content,
   Header,
-  List,
-  ListItem,
+  ListDeprecated,
+  ListItemDeprecated,
   Button,
   Flexbox,
   useTheme,
   View,
+  List,
 } from "components";
 import { ActionSheetIOS } from "react-native";
 import { ScrollView } from "react-native";
@@ -61,56 +62,44 @@ export const Friends = ({ navigation }) => {
         </Flexbox>
 
         <ScrollView style={{ height: "100%" }}>
-          <Header level={5} style={{ marginBottom: 10, marginTop: 10 }}>
-            Friend Requests
-          </Header>
-
-          <List
-            isLoading={isLoading}
-            data={response}
-            renderItem={(item) => (
-              <ListItem
-                title={item.item.username}
+          <List.Section>
+            <List.Subheader>Friend Requests</List.Subheader>
+            {response?.map((item) => (
+              <List.Item
+                title={item?.username}
                 description="Last time online: 12 minutes ago"
-                accessoryRight={() => {
-                  return (
-                    <>
-                      <Button
-                        status="primary"
-                        appearance="outline"
-                        size="tiny"
-                        onPress={(hey) => onDeleteFriendPress(item.item)}
-                      >
-                        Accept
-                      </Button>
-                      <Button
-                        style={{ marginLeft: 10 }}
-                        status="danger"
-                        appearance="outline"
-                        size="tiny"
-                        onPress={(hey) => onDeleteFriendPress(item.item)}
-                      >
-                        Reject
-                      </Button>
-                    </>
-                  );
-                }}
+                right={() => (
+                  <>
+                    <Button
+                      status="primary"
+                      appearance="outline"
+                      size="tiny"
+                      onPress={(hey) => onDeleteFriendPress(item.item)}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      style={{ marginLeft: 10 }}
+                      status="danger"
+                      appearance="outline"
+                      size="tiny"
+                      onPress={(hey) => onDeleteFriendPress(item.item)}
+                    >
+                      Reject
+                    </Button>
+                  </>
+                )}
               />
-            )}
-          />
+            ))}
+          </List.Section>
 
-          <Header level={5} style={{ marginBottom: 10, marginTop: 10 }}>
-            Friends
-          </Header>
-
-          <List
-            isLoading={isLoading}
-            data={response}
-            renderItem={(item) => (
-              <ListItem
-                title={item.item.username}
+          <List.Section>
+            <List.Subheader>Friends</List.Subheader>
+            {response?.map((item) => (
+              <List.Item
+                title={item?.username}
                 description="Last time online: 12 minutes ago"
-                accessoryRight={() => {
+                right={() => {
                   return (
                     <Button
                       status="danger"
@@ -123,27 +112,10 @@ export const Friends = ({ navigation }) => {
                   );
                 }}
               />
-            )}
-          />
+            ))}
+          </List.Section>
         </ScrollView>
       </Content>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

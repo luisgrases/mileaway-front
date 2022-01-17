@@ -2,7 +2,17 @@ import React from "react";
 import { Flexbox, SafeAreaView, View, useTheme } from "components";
 import MapView from "react-native-maps";
 
-export const DashboardMap = ({ lat, lon, isSharingLocation }) => {
+type Props = {
+  lat: number;
+  lon: number;
+  isSharingLocation: boolean;
+};
+
+export const DashboardMap: React.FC<Props> = ({
+  lat,
+  lon,
+  isSharingLocation,
+}) => {
   return (
     <View style={{ position: "relative" }}>
       <MapView

@@ -7,8 +7,7 @@ export { BottomSheet } from "./BottomSheet";
 export { Card, Toggle, Button } from "@ui-kitten/components";
 export { Divider } from "./Divider";
 export { SafeAreaView } from "react-native";
-export { Text } from "./Text";
 export { EmptyStreet } from "./EmptyStreet";
-export { ListItem } from "./ListItem";
-export { List } from "./List";
 export { useTheme } from "./useTheme";
+
+export { List, Text, Title, Caption } from "react-native-paper";
