@@ -1,7 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import { Content, Button, Flexbox, Title, Text, List } from "components";
-import { Card } from "@ui-kitten/components";
+import { Content, Button, Flexbox, Title, Text, List, Card } from "components";
 
 export const Settings = () => {
   return (
@@ -9,12 +8,14 @@ export const Settings = () => {
       <Content>
         <Title style={{ marginBottom: 20 }}>Profile</Title>
 
-        <Card>
-          <Flexbox>
-            <Text>Username:</Text>
+        <Card mode="outlined">
+          <Card.Content>
+            <Flexbox>
+              <Text>Username:</Text>
 
-            <Text style={{ marginLeft: 5 }}>luisgrases</Text>
-          </Flexbox>
+              <Text style={{ marginLeft: 5 }}>luisgrases</Text>
+            </Flexbox>
+          </Card.Content>
         </Card>
 
         <List.Item
@@ -22,7 +23,12 @@ export const Settings = () => {
           onPress={() => console.log("hello")}
         />
 
-        <Button style={{ marginTop: 200 }}>Logout</Button>
+        <Button
+          onPress={() => console.log("goodbye")}
+          style={{ marginTop: 200 }}
+        >
+          Logout
+        </Button>
       </Content>
     </SafeAreaView>
   );

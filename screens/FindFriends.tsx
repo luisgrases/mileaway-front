@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   Content,
-  Header,
+  ActivityIndicator,
   Flexbox,
   Button,
   List,
@@ -10,7 +10,6 @@ import {
   Title,
 } from "components";
 import { SafeAreaView, ScrollView } from "react-native";
-import { Spinner } from "@ui-kitten/components";
 import { useDebounce } from "use-debounce";
 import { SearchFriends } from "components/SearchFriends";
 import { useFriends } from "modules/friends";
@@ -45,7 +44,7 @@ export const FindFriends = () => {
         <ScrollView style={{ marginTop: 20, height: "100%" }}>
           {isLoading && (
             <Flexbox justify="center" align="center">
-              <Spinner />
+              <ActivityIndicator />
             </Flexbox>
           )}
 
@@ -61,7 +60,9 @@ export const FindFriends = () => {
                 title={item?.username}
                 description="Last time online: 12 minutes ago"
                 right={() => {
-                  return <Button>Add</Button>;
+                  return (
+                    <Button onPress={() => console.log("hello")}>Add</Button>
+                  );
                 }}
               />
             ))}

@@ -1,37 +1,39 @@
-/**
- * If you are not familiar with React Navigation, check out the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import {
+  Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+} from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { ColorSchemeName } from "react-native";
 
 import NotFoundScreen from "screens/NotFoundScreen";
 import { LoginScreen } from "screens/LoginScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
-import * as eva from "@eva-design/eva";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import BottomTabNavigator from "navigation/BottomTabNavigator";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-export const Navigation = ({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) => {
+const CombinedDefaultTheme = {
+  ...NavigationDefaultTheme,
+  ...PaperDefaultTheme,
+  colors: {
+    ...NavigationDefaultTheme.colors,
+    ...PaperDefaultTheme.colors,
+  },
+};
+
+export const Navigation = () => {
   return (
     <>
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <PaperProvider theme={CombinedDefaultTheme}>
         <NavigationContainer
           linking={LinkingConfiguration}
-          theme={DefaultTheme}
+          theme={CombinedDefaultTheme}
         >
           <RootNavigator />
         </NavigationContainer>
-      </ApplicationProvider>
+      </PaperProvider>
     </>
   );
 };

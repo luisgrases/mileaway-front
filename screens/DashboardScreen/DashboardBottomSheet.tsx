@@ -1,6 +1,7 @@
 import {
+  ActivityIndicator,
   BottomSheet,
-  Caption,
+  Paragraph,
   Card,
   Content,
   Divider,
@@ -9,10 +10,11 @@ import {
   List,
   Text,
   Title,
-  Toggle,
+  Switch,
+  Subheading,
+  useTheme,
 } from "components";
 import { ScrollView } from "react-native";
-import { Spinner } from "@ui-kitten/components";
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { useFriends } from "modules/friends";
@@ -27,6 +29,8 @@ export const DashboardBottomSheet: React.FC<Props> = ({
   onLocationSharingChange,
 }) => {
   const { data: friends, isLoading } = useFriends();
+  const theme = useTheme();
+  console.log(theme);
 
   return (
     <BottomSheet
@@ -34,55 +38,63 @@ export const DashboardBottomSheet: React.FC<Props> = ({
       renderContent={() => (
         <>
           <Content>
-            <Title>People</Title>
+            <Title>People Nearby</Title>
           </Content>
           <Divider />
           <Content>
-            <Card appearance="outline" style={{ marginTop: 20 }}>
-              <Flexbox direction="column">
-                <Flexbox align="center" justify="space-between">
-                  <Flexbox direction="column">
-                    <Text>Share My Location</Text>
-                    <Text style={{ marginTop: 3 }}>1 Mile Radius</Text>
+            <Card mode="outlined" style={{ marginTop: 20 }}>
+              <Card.Content>
+                <Flexbox direction="column">
+                  <Flexbox align="center" justify="space-between">
+                    <Flexbox direction="column">
+                      <Subheading>Share My Location</Subheading>
+                      <Paragraph
+                        style={{ marginTop: 3, color: theme.colors.backdrop }}
+                      >
+                        1 Mile Radius
+                      </Paragraph>
+                    </Flexbox>
+                    <Switch
+                      value={isSharingLocation}
+                      onValueChange={(isChecked) =>
+                        onLocationSharingChange(isChecked)
+                      }
+                    />
                   </Flexbox>
-                  <Toggle
-                    checked={isSharingLocation}
-                    onChange={(isChecked) => onLocationSharingChange(isChecked)}
+
+                  <Divider
+                    style={{
+                      alignSelf: "stretch",
+                      marginTop: 20,
+                      marginBottom: 10,
+                    }}
                   />
+
+                  {isSharingLocation ? (
+                    <Paragraph>
+                      You are currently sharing your location. Once any of your
+                      friends are nearby, they will appear below. At the same
+                      time, you will appear at their list of friends nearby.{" "}
+                      <Paragraph>
+                        The exact location of either party will never be shared.
+                      </Paragraph>
+                    </Paragraph>
+                  ) : (
+                    <Paragraph>
+                      {" "}
+                      You are currently not sharing your location. No one can
+                      see you and you can see no one.
+                    </Paragraph>
+                  )}
                 </Flexbox>
-
-                <Divider
-                  style={{
-                    alignSelf: "stretch",
-                    marginTop: 20,
-                    marginBottom: 10,
-                  }}
-                />
-
-                {isSharingLocation ? (
-                  <Caption>
-                    You are currently sharing your location. Once any of your
-                    friends are nearby, they will appear below. At the same
-                    time, you will appear at their list of friends nearby.{" "}
-                    <Caption>
-                      The exact location of either party will never be shared.
-                    </Caption>
-                  </Caption>
-                ) : (
-                  <Caption>
-                    {" "}
-                    You are currently not sharing your location. No one can see
-                    you and you can see no one.
-                  </Caption>
-                )}
-              </Flexbox>
+              </Card.Content>
             </Card>
           </Content>
           <ScrollView>
             <Content>
               {isSharingLocation && isLoading && (
                 <Flexbox justify="center" align="center">
-                  <Spinner />
+                  <ActivityIndicator />
                 </Flexbox>
               )}
               {isSharingLocation && friends && friends.length == 0 && (

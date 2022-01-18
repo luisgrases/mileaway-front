@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
+import { Button, Title } from "components";
 import { StackScreenProps } from "@react-navigation/stack";
 import * as WebBrowser from "expo-web-browser";
-import { Button, Text } from "@ui-kitten/components";
 import * as Google from "expo-auth-session/providers/google";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { GOOGLE_GUID_EXPO_GO_DEVELOPMENT } from "globals";
@@ -34,7 +34,7 @@ export const LoginScreen = ({ navigation }: StackScreenProps<any>) => {
 
   return (
     <SafeAreaView>
-      <Text>Login Screen!</Text>
+      <Title>Login Screen!</Title>
       <Button onPress={fakeLogin}>Login</Button>
     </SafeAreaView>
   );

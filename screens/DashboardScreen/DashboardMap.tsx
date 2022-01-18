@@ -64,9 +64,7 @@ const DiscoveryRange = ({ isSharingLocation }) => {
         borderRadius: 320,
         width: 150,
         height: 150,
-        backgroundColor: isSharingLocation
-          ? theme["color-primary-default"]
-          : "gray",
+        backgroundColor: isSharingLocation ? theme.colors.accent : "gray",
         opacity: 0.2,
       }}
       align="center"
@@ -101,7 +99,7 @@ const CurrentPositionMarker = () => {
           borderRadius: 10,
           width: 10,
           height: 10,
-          backgroundColor: theme["color-primary-default"],
+          backgroundColor: theme.colors.accent,
         }}
       />
     </Flexbox>

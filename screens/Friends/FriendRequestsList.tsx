@@ -1,11 +1,12 @@
-import { Button, List } from "components";
-import { FriendsList } from "screens/Friends/FriendsList";
+import { Button, List, useTheme, ActivityIndicator } from "components";
+
 import { ScrollView } from "react-native";
 import * as React from "react";
 import { useFriendRequests } from "modules/friendRequests";
 
 export const FriendRequestList = () => {
-  const { data: friendRequests } = useFriendRequests();
+  const theme = useTheme();
+  const { data: friendRequests, isLoading } = useFriendRequests();
 
   const handleAcceptFriendRequest = () => {
     console.log("accepted");
@@ -15,13 +16,21 @@ export const FriendRequestList = () => {
     <ScrollView style={{ height: "100%" }}>
       <List.Section>
         <List.Subheader>Friend Requests</List.Subheader>
+        {isLoading && <ActivityIndicator />}
         {friendRequests?.map((friendRequest) => (
           <List.Item
             title={friendRequest.from.username}
             right={() => (
               <>
-                <Button onPress={handleAcceptFriendRequest}>Accept</Button>
-                <Button onPress={handleAcceptFriendRequest}>Reject</Button>
+                <Button mode="contained" onPress={handleAcceptFriendRequest}>
+                  Accept
+                </Button>
+                <Button
+                  style={{ marginLeft: 5 }}
+                  onPress={handleAcceptFriendRequest}
+                >
+                  Reject
+                </Button>
               </>
             )}
           />

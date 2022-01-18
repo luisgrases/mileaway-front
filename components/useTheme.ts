@@ -1,1 +1,1 @@
-export { useTheme } from "@ui-kitten/components";
+export { useTheme } from "react-native-paper";

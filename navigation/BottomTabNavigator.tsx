@@ -1,10 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 
-import Colors from "../constants/Colors";
 import { FriendsNavigator } from "./FriendsNavigator";
 
-import { Icon, IconProps } from "@ui-kitten/components";
+import { Icon } from "components";
 import { DashboardNavigator } from "./DashboardNavigator";
 import { SettingsNavigator } from "./SettingsNavigator";
 
@@ -18,16 +17,13 @@ const BottomTab = createBottomTabNavigator<Screens>();
 
 export default function BottomTabNavigator() {
   return (
-    <BottomTab.Navigator
-      initialRouteName="Dashboard"
-      tabBarOptions={{ activeTintColor: Colors["light"].primary }}
-    >
+    <BottomTab.Navigator initialRouteName="Dashboard">
       <BottomTab.Screen
         name="Dashboard"
         component={DashboardNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="navigation-2-outline" color={color} />
+            <Icon size={30} name="view-dashboard" color={color} />
           ),
         }}
       />
@@ -36,7 +32,7 @@ export default function BottomTabNavigator() {
         component={FriendsNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="people-outline" color={color} />
+            <Icon size={30} name="account-group" color={color} />
           ),
         }}
       />
@@ -45,22 +41,10 @@ export default function BottomTabNavigator() {
         component={SettingsNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="settings-2-outline" color={color} />
+            <Icon size={30} name="cog-outline" color={color} />
           ),
         }}
       />
     </BottomTab.Navigator>
-  );
-}
-
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: { name: IconProps["name"]; color: string }) {
-  return (
-    <Icon
-      style={{ width: 30, height: 30 }}
-      fill={props.color}
-      name={props.name}
-    />
   );
 }
