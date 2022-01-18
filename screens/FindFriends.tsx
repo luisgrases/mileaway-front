@@ -1,46 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { Content, Header, Flexbox, Button, List } from "components";
+import React, { useState } from "react";
+import {
+  Content,
+  Header,
+  Flexbox,
+  Button,
+  List,
+  TextInput,
+  IconButton,
+  Title,
+} from "components";
 import { SafeAreaView, ScrollView } from "react-native";
-import { Icon, Input, Spinner } from "@ui-kitten/components";
+import { Spinner } from "@ui-kitten/components";
 import { useDebounce } from "use-debounce";
-import { useMockSendRequest } from "hooks/useMockSendRequest";
 import { SearchFriends } from "components/SearchFriends";
+import { useFriends } from "modules/friends";
+import { useNavigation } from "@react-navigation/native";
 
-export const FindFriends = ({ navigation }) => {
+export const FindFriends = () => {
+  const navigation = useNavigation();
   const [searchValue, setSearchValue] = useState("");
   const [value] = useDebounce(searchValue, 400);
 
-  const [send, { response, isLoading }] = useMockSendRequest([
-    { id: 1, username: "juangra", lastSeen: new Date().toISOString() },
-    { id: 2, username: "pedrogra", lastSeen: new Date().toISOString() },
-    { id: 3, username: "luisgra", lastSeen: new Date().toISOString() },
-  ]);
+  const { data: results, isLoading } = useFriends({}, { enabled: !!value });
 
-  useEffect(() => {
-    if (value) {
-      send();
-    }
-  }, [value]);
   return (
     <SafeAreaView>
       <Content>
-        <Flexbox>
-          <Icon
+        <Flexbox align="center">
+          <IconButton
             onPress={() => navigation.pop()}
-            name="arrow-back-outline"
-            fill="black"
-            style={{ width: 25, height: 25, marginRight: 10 }}
+            icon="arrow-left"
+            style={{ marginRight: 10 }}
           />
-          <Header level={3}>Add Friends</Header>
+          <Title>Add Friends</Title>
         </Flexbox>
-        <Input
+        <TextInput
           onChangeText={(value) => setSearchValue(value)}
           style={{ marginTop: 10 }}
-          autoCompleteType="off"
           autoCapitalize="none"
           autoCorrect={false}
           placeholder="Search"
         />
+
         <ScrollView style={{ marginTop: 20, height: "100%" }}>
           {isLoading && (
             <Flexbox justify="center" align="center">
@@ -48,23 +49,19 @@ export const FindFriends = ({ navigation }) => {
             </Flexbox>
           )}
 
-          {!isLoading && !response && (
+          {!isLoading && !results && (
             <Flexbox align="center" justify="center" direction="column">
               <SearchFriends height="200" />
             </Flexbox>
           )}
 
           <List.Section>
-            {response?.map((item) => (
+            {results?.map((item) => (
               <List.Item
                 title={item?.username}
                 description="Last time online: 12 minutes ago"
                 right={() => {
-                  return (
-                    <Button status="primary" appearance="outline" size="tiny">
-                      Add
-                    </Button>
-                  );
+                  return <Button>Add</Button>;
                 }}
               />
             ))}

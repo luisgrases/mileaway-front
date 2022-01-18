@@ -12,12 +12,5 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Dashboard: undefined;
   Friends: undefined;
-};
-
-export type TabOneParamList = {
-  DashboardScreen: undefined;
-};
-
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  Settings: undefined;
 };

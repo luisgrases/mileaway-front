@@ -3,11 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
@@ -51,11 +47,6 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen
-        name="FindFriendsScreen"
-        component={FindFriends}
-        options={{ headerShown: false }}
-      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

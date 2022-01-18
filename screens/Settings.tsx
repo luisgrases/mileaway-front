@@ -1,31 +1,19 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import {
-  Content,
-  Button,
-  Flexbox,
-  Header,
-  Text,
-  ListItemDeprecated,
-  List,
-} from "components";
+import { Content, Button, Flexbox, Title, Text, List } from "components";
 import { Card } from "@ui-kitten/components";
 
 export const Settings = () => {
   return (
     <SafeAreaView>
       <Content>
-        <Header style={{ marginBottom: 20 }} level={3}>
-          Profile
-        </Header>
+        <Title style={{ marginBottom: 20 }}>Profile</Title>
 
         <Card>
           <Flexbox>
-            <Text weight="medium">Username:</Text>
+            <Text>Username:</Text>
 
-            <Text style={{ marginLeft: 5 }} tag="span">
-              luisgrases
-            </Text>
+            <Text style={{ marginLeft: 5 }}>luisgrases</Text>
           </Flexbox>
         </Card>
 
@@ -34,9 +22,7 @@ export const Settings = () => {
           onPress={() => console.log("hello")}
         />
 
-        <Button appearance="outline" status="danger" style={{ marginTop: 200 }}>
-          Logout
-        </Button>
+        <Button style={{ marginTop: 200 }}>Logout</Button>
       </Content>
     </SafeAreaView>
   );

@@ -9,6 +9,7 @@ export { Divider } from "./Divider";
 export { SafeAreaView } from "react-native";
 export { EmptyStreet } from "./EmptyStreet";
 export { useTheme } from "./useTheme";
+export { TextInput } from "./TextInput";
 
 export {
   List,

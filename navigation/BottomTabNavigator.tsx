@@ -1,35 +1,23 @@
-/**
- * Learn more about createBottomTabNavigator:
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-
-import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 
 import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
-import { DashboardScreen } from "screens/DashboardScreen";
-import { Friends } from "screens/Friends/Friends";
-import { Settings } from "screens/Settings";
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
-import { Text } from "react-native";
+import { BottomTabParamList } from "../types";
+import { FriendsNavigator } from "./FriendsNavigator";
 
-import {
-  Icon,
-  IconProps,
-  IconRegistry,
-  Toggle,
-  useTheme,
-} from "@ui-kitten/components";
-import { FindFriends } from "screens/FindFriends";
+import { Icon, IconProps } from "@ui-kitten/components";
+import { DashboardNavigator } from "./DashboardNavigator";
+import { SettingsNavigator } from "./SettingsNavigator";
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+type Screens = {
+  Dashboard: undefined;
+  Friends: undefined;
+  Settings: undefined;
+};
+
+const BottomTab = createBottomTabNavigator<Screens>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
       initialRouteName="Dashboard"
@@ -37,7 +25,7 @@ export default function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Dashboard"
-        component={TabOneNavigator}
+        component={DashboardNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="navigation-2-outline" color={color} />
@@ -46,7 +34,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Friends"
-        component={TabTwoNavigator}
+        component={FriendsNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="people-outline" color={color} />
@@ -54,8 +42,8 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Profile"
-        component={TabThreeNavigator}
+        name="Settings"
+        component={SettingsNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="settings-2-outline" color={color} />
@@ -75,56 +63,5 @@ function TabBarIcon(props: { name: IconProps["name"]; color: string }) {
       fill={props.color}
       name={props.name}
     />
-  );
-}
-
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
-
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="DashboardScreen"
-        component={DashboardScreen}
-        options={{
-          headerShown: false,
-          headerRight: () => (
-            <Toggle>
-              {(evaProps) => <Text {...evaProps}>Not Sharing</Text>}
-            </Toggle>
-          ),
-        }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={Friends}
-        options={{ headerShown: false }}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
-
-const TabThreeStack = createStackNavigator<TabTwoParamList>();
-
-function TabThreeNavigator() {
-  return (
-    <TabThreeStack.Navigator>
-      <TabTwoStack.Screen
-        name="Profile"
-        component={Settings}
-        options={{ headerShown: false }}
-      />
-    </TabThreeStack.Navigator>
   );
 }
