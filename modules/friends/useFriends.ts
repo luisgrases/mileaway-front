@@ -7,7 +7,7 @@ type UseFriendsParams = {};
 
 export const useFriends = (
   params: UseFriendsParams = {},
-  options: UseQueryOptions<Friend[]>
+  options: UseQueryOptions<Friend[]> = {}
 ) => {
   return useQuery<Friend[]>(
     ["friend", "list", { ...params }],

@@ -7,7 +7,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
-import Navigation from "./navigation";
+import { Navigation } from "./navigation/Navigation";
 
 const theme = {
   ...DefaultTheme,

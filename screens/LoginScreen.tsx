@@ -29,7 +29,7 @@ export const LoginScreen = ({ navigation }: StackScreenProps<any>) => {
   };
 
   const fakeLogin = () => {
-    navigation.replace("Root");
+    navigation.replace("Authenticated");
   };
 
   return (

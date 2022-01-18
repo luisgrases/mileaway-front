@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 
 import Colors from "../constants/Colors";
-import { BottomTabParamList } from "../types";
 import { FriendsNavigator } from "./FriendsNavigator";
 
 import { Icon, IconProps } from "@ui-kitten/components";
