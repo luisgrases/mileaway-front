@@ -22,4 +22,5 @@ export {
   IconButton,
   Switch,
   Divider,
+  Searchbar,
 } from "react-native-paper";

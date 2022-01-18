@@ -7,6 +7,7 @@ import {
   List,
   TextInput,
   IconButton,
+  Searchbar,
   Title,
 } from "components";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -33,10 +34,11 @@ export const FindFriends = () => {
           />
           <Title>Add Friends</Title>
         </Flexbox>
-        <TextInput
+        <Searchbar
           onChangeText={(value) => setSearchValue(value)}
           style={{ marginTop: 10 }}
           autoCapitalize="none"
+          value={searchValue}
           autoCorrect={false}
           placeholder="Search"
         />
