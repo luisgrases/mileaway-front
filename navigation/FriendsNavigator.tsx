@@ -5,7 +5,6 @@ import { FindFriends } from "screens/FindFriends";
 
 type Screens = {
   FriendsScreen: undefined;
-  FindFriendsScreen: undefined;
 };
 
 const FriendsStack = createStackNavigator<Screens>();
@@ -16,11 +15,6 @@ export const FriendsNavigator = () => {
       <FriendsStack.Screen
         name="FriendsScreen"
         component={Friends}
-        options={{ headerShown: false }}
-      />
-      <FriendsStack.Screen
-        name="FindFriendsScreen"
-        component={FindFriends}
         options={{ headerShown: false }}
       />
     </FriendsStack.Navigator>

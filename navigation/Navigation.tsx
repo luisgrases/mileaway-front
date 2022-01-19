@@ -13,6 +13,7 @@ import NotFoundScreen from "screens/NotFoundScreen";
 import { LoginScreen } from "screens/LoginScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
 import BottomTabNavigator from "navigation/BottomTabNavigator";
+import { FindFriends } from "screens/FindFriends";
 
 const CombinedDefaultTheme = {
   ...NavigationDefaultTheme,
@@ -42,6 +43,7 @@ type RootScreens = {
   Login: undefined;
   Authenticated: undefined;
   NotFound: undefined;
+  FindFriendsScreen: undefined;
 };
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -53,6 +55,11 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Authenticated" component={BottomTabNavigator} />
+      <Stack.Screen
+        name="FindFriendsScreen"
+        component={FindFriends}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
