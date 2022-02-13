@@ -54,7 +54,9 @@ export const DashboardMap: React.FC<Props> = ({
   );
 };
 
-const DiscoveryRange = ({ isSharingLocation }) => {
+const DiscoveryRange: React.FC<{ isSharingLocation: boolean }> = ({
+  isSharingLocation,
+}) => {
   const theme = useTheme();
 
   return (

@@ -5,7 +5,6 @@ import {
   Flexbox,
   Button,
   List,
-  TextInput,
   IconButton,
   Searchbar,
   Title,
@@ -15,9 +14,10 @@ import { useDebounce } from "use-debounce";
 import { SearchFriends } from "components/SearchFriends";
 import { useFriends } from "modules/friends";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 export const FindFriends = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<any>>();
   const [searchValue, setSearchValue] = useState("");
   const [value] = useDebounce(searchValue, 400);
 

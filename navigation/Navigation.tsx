@@ -14,6 +14,7 @@ import { LoginScreen } from "screens/LoginScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
 import BottomTabNavigator from "navigation/BottomTabNavigator";
 import { FindFriends } from "screens/FindFriends";
+import { useAuthenticated } from "modules/auth/useAuthenticated";
 
 const CombinedDefaultTheme = {
   ...NavigationDefaultTheme,
@@ -51,15 +52,23 @@ type RootScreens = {
 const Stack = createStackNavigator<RootScreens>();
 
 function RootNavigator() {
+  const { isAuthenticated } = useAuthenticated();
+  console.log("IsAuthenticaedl", isAuthenticated);
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Authenticated" component={BottomTabNavigator} />
-      <Stack.Screen
-        name="FindFriendsScreen"
-        component={FindFriends}
-        options={{ headerShown: false }}
-      />
+      {isAuthenticated ? (
+        <>
+          <Stack.Screen name="Authenticated" component={BottomTabNavigator} />
+          <Stack.Screen
+            name="FindFriendsScreen"
+            component={FindFriends}
+            options={{ headerShown: false }}
+          />
+        </>
+      ) : (
+        <Stack.Screen name="Login" component={LoginScreen} />
+      )}
+
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

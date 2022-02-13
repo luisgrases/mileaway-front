@@ -1,18 +1,10 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import {
-  Content,
-  Button,
-  Divider,
-  Title,
-  Text,
-  List,
-  Card,
-  Icon,
-  useTheme,
-} from "components";
+import { Content, Divider, Title, List, useTheme } from "components";
+import { useLogout } from "modules/auth";
 
 export const Settings = () => {
+  const { logout } = useLogout();
   const theme = useTheme();
   return (
     <SafeAreaView>
@@ -50,7 +42,7 @@ export const Settings = () => {
               <List.Icon {...props} color={theme.colors.error} icon="logout" />
             );
           }}
-          onPress={() => console.log("hello")}
+          onPress={logout}
         />
       </Content>
     </SafeAreaView>
