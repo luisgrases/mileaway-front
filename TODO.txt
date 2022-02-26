@@ -1,0 +1,1 @@
+- as a member I want to be able to set my username before using the app

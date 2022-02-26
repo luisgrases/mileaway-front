@@ -9,24 +9,29 @@ import useCachedResources from "./hooks/useCachedResources";
 import { Navigation } from "./navigation/Navigation";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
 import { AuthenticationProvider } from "modules/auth/AuthenticationProvider";
-import { getItemAsync } from "expo-secure-store";
+import { useCurrentUser } from "modules/users";
+import { View } from "components";
+import { Text } from "react-native";
 
 function AppContent() {
   const isLoadingComplete = useCachedResources();
-  const queryClient = new QueryClient();
 
   const [appIsReady, setAppIsReady] = useState(false);
-  const { setIsAuthenticated } = useAuthenticated();
+  const { isAuthenticated } = useAuthenticated();
+  useCurrentUser();
 
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
-      const token = await getItemAsync("session-token");
-      setIsAuthenticated(!!token);
-      setAppIsReady(true);
     }
     prepare();
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated === true || isAuthenticated === false) {
+      setAppIsReady(true);
+    }
+  }, [isAuthenticated]);
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
@@ -43,21 +48,23 @@ function AppContent() {
     return null;
   } else {
     return (
-      <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <Navigation />
-          <StatusBar />
-        </SafeAreaProvider>
-      </QueryClientProvider>
+      <SafeAreaProvider>
+        <Navigation />
+        <StatusBar />
+      </SafeAreaProvider>
     );
   }
 }
 
+const queryClient = new QueryClient();
+
 const App: React.FC = () => {
   return (
-    <AuthenticationProvider>
-      <AppContent />
-    </AuthenticationProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthenticationProvider>
+        <AppContent />
+      </AuthenticationProvider>
+    </QueryClientProvider>
   );
 };
 

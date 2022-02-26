@@ -15,6 +15,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import BottomTabNavigator from "navigation/BottomTabNavigator";
 import { FindFriends } from "screens/FindFriends";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
+import { useCurrentUser } from "modules/users";
 
 const CombinedDefaultTheme = {
   ...NavigationDefaultTheme,
@@ -53,7 +54,9 @@ const Stack = createStackNavigator<RootScreens>();
 
 function RootNavigator() {
   const { isAuthenticated } = useAuthenticated();
-  console.log("IsAuthenticaedl", isAuthenticated);
+
+  const { data: currentUser } = useCurrentUser();
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAuthenticated ? (

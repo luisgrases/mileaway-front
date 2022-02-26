@@ -22,8 +22,6 @@ export const LoginScreen = ({ navigation }: StackScreenProps<any>) => {
     scopes: ["profile", "email"],
   });
 
-  console.log("milaway response", mileawayLoginResponse);
-
   useEffect(() => {
     if (googleLoginResponse?.type === "success") {
       const {

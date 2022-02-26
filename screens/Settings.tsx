@@ -17,7 +17,6 @@ export const Settings = () => {
             return <List.Icon {...props} icon="account-circle" />;
           }}
           title="luisgrases"
-          onPress={() => console.log("hello")}
         />
         <Divider />
 

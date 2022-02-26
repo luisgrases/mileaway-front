@@ -19,7 +19,6 @@ export const FriendsList = () => {
         if (buttonIndex === 0) {
           // cancel action
         } else if (buttonIndex === 1) {
-          console.log("hey");
         }
       }
     );

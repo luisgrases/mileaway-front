@@ -30,7 +30,6 @@ export const DashboardBottomSheet: React.FC<Props> = ({
 }) => {
   const { data: friends, isLoading } = useFriends();
   const theme = useTheme();
-  console.log(theme);
 
   return (
     <BottomSheet
