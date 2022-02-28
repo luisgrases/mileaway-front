@@ -2,9 +2,12 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { Content, Divider, Title, List, useTheme } from "components";
 import { useLogout } from "modules/auth";
+import { useCurrentUser } from "modules/users";
 
 export const Settings = () => {
   const { logout } = useLogout();
+  const { data: currentUser } = useCurrentUser();
+
   const theme = useTheme();
   return (
     <SafeAreaView>
@@ -16,7 +19,7 @@ export const Settings = () => {
           left={(props) => {
             return <List.Icon {...props} icon="account-circle" />;
           }}
-          title="luisgrases"
+          title={currentUser?.username}
         />
         <Divider />
 

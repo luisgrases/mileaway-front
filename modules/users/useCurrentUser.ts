@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from "react-query";
 import { User } from "Types";
 
 import axios from "axios";
-import { getItemAsync } from "expo-secure-store";
+import { getItemAsync, deleteItemAsync } from "expo-secure-store";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
 
 type UseCurrentUserParams = {};
@@ -24,6 +24,7 @@ export const useCurrentUser = (
         return response.data;
       } catch (e) {
         console.error(e);
+        await deleteItemAsync("session-token");
         setIsAuthenticated(false);
       }
     },

@@ -5,5 +5,5 @@ import { TextInputProps } from "react-native-paper/lib/typescript/components/Tex
 type Props = Omit<TextInputProps, "theme">;
 
 export const TextInput = ({ mode = "outlined", ...rest }: Props) => {
-  return <TextInputMui {...rest} mode={mode} />;
+  return <TextInputMui {...rest} dense mode={mode} />;
 };

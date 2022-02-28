@@ -1,10 +1,10 @@
 import {
-  NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
+  NavigationContainer,
 } from "@react-navigation/native";
 import {
-  Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
 } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
@@ -13,6 +13,7 @@ import NotFoundScreen from "screens/NotFoundScreen";
 import { LoginScreen } from "screens/LoginScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
 import BottomTabNavigator from "navigation/BottomTabNavigator";
+import { OnboardingNavigator } from "navigation/OnboardingNavigator";
 import { FindFriends } from "screens/FindFriends";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
 import { useCurrentUser } from "modules/users";
@@ -46,6 +47,7 @@ type RootScreens = {
   Authenticated: undefined;
   NotFound: undefined;
   FindFriendsScreen: undefined;
+  Onboarding: undefined;
 };
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -57,9 +59,16 @@ function RootNavigator() {
 
   const { data: currentUser } = useCurrentUser();
 
+  const hasCompletedOnboarding = !!currentUser?.username;
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAuthenticated ? (
+      {isAuthenticated && !hasCompletedOnboarding && (
+        <>
+          <Stack.Screen name="Onboarding" component={OnboardingNavigator} />
+        </>
+      )}
+      {isAuthenticated && hasCompletedOnboarding && (
         <>
           <Stack.Screen name="Authenticated" component={BottomTabNavigator} />
           <Stack.Screen
@@ -68,7 +77,9 @@ function RootNavigator() {
             options={{ headerShown: false }}
           />
         </>
-      ) : (
+      )}
+
+      {!isAuthenticated && (
         <Stack.Screen name="Login" component={LoginScreen} />
       )}
 
