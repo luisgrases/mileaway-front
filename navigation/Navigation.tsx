@@ -59,6 +59,8 @@ function RootNavigator() {
 
   const { data: currentUser } = useCurrentUser();
 
+  console.log("currentUser", currentUser);
+
   const hasCompletedOnboarding = !!currentUser?.username;
 
   return (

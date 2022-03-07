@@ -19,12 +19,14 @@ export const FriendRequestList = () => {
         {isLoading && <ActivityIndicator />}
         {friendRequests?.map((friendRequest) => (
           <List.Item
+            key={friendRequest.id}
             title={friendRequest.from.username}
             right={() => (
               <>
                 <Button mode="contained" onPress={handleAcceptFriendRequest}>
                   Accept
                 </Button>
+
                 <Button
                   style={{ marginLeft: 5 }}
                   onPress={handleAcceptFriendRequest}

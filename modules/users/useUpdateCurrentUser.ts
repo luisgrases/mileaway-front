@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
 
-import axios from "axios";
-import { getItemAsync } from "expo-secure-store";
+import { sendRequest } from "utils/sendRequest";
 
 type UseUpdateCurrentUserBody = {
   username?: string;
+  location?: { lat: number; lng: number };
+  isSharingLocation?: boolean;
 };
 
 export const useUpdateCurrentUser = () => {
@@ -12,9 +13,10 @@ export const useUpdateCurrentUser = () => {
 
   return useMutation(
     async (body: UseUpdateCurrentUserBody) => {
-      const token = await getItemAsync("session-token");
-      return await axios.put(`http://localhost:4000/me`, body, {
-        headers: { "session-token": token },
+      return await sendRequest({
+        method: "PUT",
+        url: "/me",
+        params: body,
       });
     },
     {

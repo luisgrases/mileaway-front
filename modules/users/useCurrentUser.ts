@@ -4,6 +4,7 @@ import { User } from "Types";
 import axios from "axios";
 import { getItemAsync, deleteItemAsync } from "expo-secure-store";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
+import { sendRequest } from "utils/sendRequest";
 
 type UseCurrentUserParams = {};
 
@@ -16,9 +17,9 @@ export const useCurrentUser = (
     ["currentUser"],
     async () => {
       try {
-        const token = await getItemAsync("session-token");
-        const response = await axios.get("http://localhost:4000/me", {
-          headers: { "session-token": token },
+        const response = await sendRequest({
+          method: "GET",
+          url: "/me",
         });
         setIsAuthenticated(true);
         return response.data;

@@ -17,7 +17,9 @@ import {
 import { ScrollView } from "react-native";
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
-import { useFriends } from "modules/friends";
+import { useUpdateCurrentUser } from "modules/users/useUpdateCurrentUser";
+import { useCurrentUser } from "modules/users";
+import { useFriends } from "modules/users/useFriends";
 
 type Props = {
   isSharingLocation: boolean;
@@ -28,8 +30,19 @@ export const DashboardBottomSheet: React.FC<Props> = ({
   isSharingLocation,
   onLocationSharingChange,
 }) => {
-  const { data: friends, isLoading } = useFriends();
+  const { mutateAsync: updateCurrentUser } = useUpdateCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   const theme = useTheme();
+  const { data: friends, isLoading } = useFriends(
+    { inRange: true },
+    { refetchInterval: 5000 }
+  );
+
+  const handleToggleLocationSharing = () => {
+    updateCurrentUser({ isSharingLocation: !currentUser!.isSharingLocation });
+  };
+
+  if (!currentUser) return null;
 
   return (
     <BottomSheet
@@ -54,10 +67,8 @@ export const DashboardBottomSheet: React.FC<Props> = ({
                       </Paragraph>
                     </Flexbox>
                     <Switch
-                      value={isSharingLocation}
-                      onValueChange={(isChecked) =>
-                        onLocationSharingChange(isChecked)
-                      }
+                      value={currentUser.isSharingLocation}
+                      onValueChange={handleToggleLocationSharing}
                     />
                   </Flexbox>
 
@@ -111,6 +122,7 @@ export const DashboardBottomSheet: React.FC<Props> = ({
                 friends.length > 0 &&
                 friends.map((friend) => (
                   <List.Item
+                    key={friend.id}
                     disabled
                     title={friend.username}
                     description={`Last seen nearby: ${formatDistanceToNow(
