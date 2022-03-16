@@ -2,25 +2,24 @@ import { useMutation, useQueryClient } from "react-query";
 
 import { sendRequest } from "utils/sendRequest";
 
-type UseUpdateCurrentUserBody = {
-  username?: string;
-  isSharingLocation?: boolean;
+type UseCreateFriendRequestBody = {
+  toId: number;
 };
 
-export const useUpdateCurrentUser = () => {
+export const useCreateFriendRequest = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async (body: UseUpdateCurrentUserBody) => {
+    async (body: UseCreateFriendRequestBody) => {
       return await sendRequest({
-        method: "PUT",
-        url: "/me",
+        method: "POST",
+        url: "/friendships",
         data: body,
       });
     },
     {
       onSuccess: async (data) => {
-        await queryClient.invalidateQueries(["currentUser"]);
+        await queryClient.invalidateQueries(["friendRequests", "list"]);
         return data;
       },
     }

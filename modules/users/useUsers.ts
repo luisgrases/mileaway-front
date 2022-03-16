@@ -3,20 +3,20 @@ import { User } from "Types";
 
 import { sendRequest } from "utils/sendRequest";
 
-type UseFriendsInRangeParams = {
-  inRange?: boolean;
+type UseUsersParams = {
+  username?: string;
 };
 
-export const useFriends = (
-  params: UseFriendsInRangeParams = {},
+export const useUsers = (
+  params: UseUsersParams = {},
   options?: UseQueryOptions<User[]>
 ) => {
   return useQuery<User[]>(
-    ["friends", "inRange", params],
+    ["users", params],
     async () => {
       const response = await sendRequest({
         method: "GET",
-        url: "/me/friends",
+        url: "/v1/users",
         params,
       });
 

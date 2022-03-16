@@ -7293,6 +7293,16 @@ react-native-paper@^4.11.2:
     color "^3.1.2"
     react-native-iphone-x-helper "^1.3.1"
 
+react-native-pulse-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-pulse-loader/-/react-native-pulse-loader-1.0.3.tgz#7aa76ecec0ad31465ba448c9341fcfe35082bfee"
+  integrity sha512-rbpszeD2IGhpd5/oztomDIL/Ty+OXXNnNQc5n6eqW2VrUJSHaHozG3lC8X+QxxoOdCntZh73Z9X92fIguorPPw==
+
+react-native-pulse@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-pulse/-/react-native-pulse-1.0.7.tgz#5a8dc60cb6585f90ce8400beb74fbf89e5f7cd1b"
+  integrity sha512-PQvek/hC2YZddzJgyJT9FZbg37eZKl1rcYNlHbSItL3XZ0n3zF5jxFRrYLyGqHnRuRPHoY7qnrdHe4qVwy3Jnw==
+
 react-native-reanimated@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.2.0.tgz#a6412c56b4e591d1f00fac949f62d0c72c357c78"

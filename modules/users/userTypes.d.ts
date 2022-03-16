@@ -3,5 +3,6 @@ declare module "Types" {
     id: number;
     username: string;
     isSharingLocation: boolean;
+    locationUpdatedAt: string;
   };
 }

@@ -1,8 +1,7 @@
 import { useQuery, UseQueryOptions } from "react-query";
 import { User } from "Types";
 
-import axios from "axios";
-import { getItemAsync, deleteItemAsync } from "expo-secure-store";
+import { deleteItemAsync } from "expo-secure-store";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
 import { sendRequest } from "utils/sendRequest";
 

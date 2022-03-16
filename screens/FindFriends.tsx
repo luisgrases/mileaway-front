@@ -8,20 +8,34 @@ import {
   IconButton,
   Searchbar,
   Title,
+  Text,
+  useTheme,
 } from "components";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDebounce } from "use-debounce";
 import { SearchFriends } from "components/SearchFriends";
-import { useFriends } from "modules/friends";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useUsers } from "modules/users/useUsers";
+import { useCreateFriendRequest } from "modules/friendRequests/useCreateFriendRequest";
 
 export const FindFriends = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const [searchValue, setSearchValue] = useState("");
   const [value] = useDebounce(searchValue, 400);
+  const theme = useTheme();
 
-  const { data: results, isLoading } = useFriends({}, { enabled: !!value });
+  const { data: results, isLoading } = useUsers(
+    { username: value },
+    { enabled: !!value }
+  );
+
+  const {
+    mutateAsync: createFriendRequest,
+    isLoading: isCreatingFriendRequest,
+  } = useCreateFriendRequest();
+
+  console.log("results", results);
 
   return (
     <SafeAreaView>
@@ -49,26 +63,43 @@ export const FindFriends = () => {
               <ActivityIndicator />
             </Flexbox>
           )}
-
           {!isLoading && !results && (
             <Flexbox align="center" justify="center" direction="column">
               <SearchFriends height="200" />
             </Flexbox>
           )}
 
-          <List.Section>
-            {results?.map((item) => (
+          {results && results.length === 0 && (
+            <List.Section>
               <List.Item
-                title={item?.username}
-                description="Last time online: 12 minutes ago"
-                right={() => {
-                  return (
-                    <Button onPress={() => console.log("hello")}>Add</Button>
-                  );
-                }}
+                title={
+                  <Text
+                    style={{ color: theme.colors.backdrop }}
+                  >{`No results found for ${value}`}</Text>
+                }
               />
-            ))}
-          </List.Section>
+            </List.Section>
+          )}
+          {results && results.length > 0 && (
+            <List.Section>
+              {results.map((user) => (
+                <List.Item
+                  key={user.username}
+                  title={user.username}
+                  right={() => {
+                    return (
+                      <Button
+                        loading={isCreatingFriendRequest}
+                        onPress={() => createFriendRequest({ toId: user.id })}
+                      >
+                        Add
+                      </Button>
+                    );
+                  }}
+                />
+              ))}
+            </List.Section>
+          )}
         </ScrollView>
       </Content>
     </SafeAreaView>

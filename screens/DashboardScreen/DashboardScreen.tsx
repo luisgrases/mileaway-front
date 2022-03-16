@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { View } from "components";
+import { List, Switch, View } from "components";
 
 import { DashboardMap } from "screens/DashboardScreen/DashboardMap";
 import { DashboardBottomSheet } from "screens/DashboardScreen/DashboardBottomSheet";
 import { useWatchPositionAsync } from "utils/useWatchPositionAsync";
 import { useUpdateCurrentUser } from "modules/users/useUpdateCurrentUser";
+import { SafeAreaView } from "react-native";
+import { useUpdateCurrentUserLocation } from "modules/users/useUpdateCurrentUserLocation";
 
 export function DashboardScreen() {
-  const { currentLocation, error } = useWatchPositionAsync();
+  const { currentLocation } = useWatchPositionAsync();
 
-  // const currentLocation = {
-  //   coords: {
-  //     latitude: 12,
-  //     longitude: 14,
-  //   },
-  // };
-
-  console.log("currentLocation", currentLocation);
-
-  const [isSharingLocation, setIsSharingLocation] = useState(true);
-
-  const { mutateAsync: updateCurrentUser } = useUpdateCurrentUser();
+  const { mutateAsync: updateCurrentUserLocation } =
+    useUpdateCurrentUserLocation();
 
   useEffect(() => {
     if (currentLocation) {
-      console.log("currentLocationn", currentLocation);
-      updateCurrentUser({
-        location: {
-          lat: currentLocation.coords.latitude,
-          lng: currentLocation.coords.longitude,
-        },
+      updateCurrentUserLocation({
+        lat: currentLocation.coords.latitude,
+        lng: currentLocation.coords.longitude,
       });
     }
   }, [currentLocation]);
@@ -40,16 +29,12 @@ export function DashboardScreen() {
     <>
       <View>
         <DashboardMap
-          isSharingLocation={isSharingLocation}
           lat={currentLocation.coords.latitude}
           lon={currentLocation.coords.longitude}
         />
       </View>
 
-      <DashboardBottomSheet
-        isSharingLocation={isSharingLocation}
-        onLocationSharingChange={setIsSharingLocation}
-      />
+      <DashboardBottomSheet />
     </>
   );
 }

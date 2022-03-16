@@ -24,4 +24,5 @@ export {
   Switch,
   Divider,
   Searchbar,
+  Headline,
 } from "react-native-paper";

@@ -7,6 +7,8 @@ import { Friend } from "Types";
 export const FriendsList = () => {
   const { data: friends } = useFriends();
 
+  console.log("frien", friends);
+
   const handleDeleteFriendPress = (friend: Friend) => {
     ActionSheetIOS.showActionSheetWithOptions(
       {

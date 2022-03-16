@@ -1,18 +1,24 @@
 import React from "react";
-import { Flexbox, SafeAreaView, View, useTheme } from "components";
+import {
+  Flexbox,
+  SafeAreaView,
+  View,
+  useTheme,
+  Switch,
+  List,
+  BlurView,
+} from "components";
 import MapView from "react-native-maps";
+import { useCurrentUser } from "modules/users";
+import { BlurView as NativeBlurView } from "expo-blur";
 
 type Props = {
   lat: number;
   lon: number;
-  isSharingLocation: boolean;
 };
 
-export const DashboardMap: React.FC<Props> = ({
-  lat,
-  lon,
-  isSharingLocation,
-}) => {
+export const DashboardMap: React.FC<Props> = ({ lat, lon }) => {
+  const { data: currentUser } = useCurrentUser();
   return (
     <View style={{ position: "relative" }}>
       <MapView
@@ -47,7 +53,7 @@ export const DashboardMap: React.FC<Props> = ({
         align="center"
         justify="center"
       >
-        <DiscoveryRange isSharingLocation={isSharingLocation} />
+        <DiscoveryRange isSharingLocation={currentUser!.isSharingLocation} />
         <CurrentPositionMarker />
       </Flexbox>
     </View>

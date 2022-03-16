@@ -1,35 +1,26 @@
 import {
-  ActivityIndicator,
   BottomSheet,
-  Paragraph,
-  Card,
   Content,
   Divider,
-  EmptyStreet,
   Flexbox,
   List,
   Text,
   Title,
   Switch,
-  Subheading,
   useTheme,
+  View,
 } from "components";
+
 import { ScrollView } from "react-native";
 import { formatDistanceToNow } from "date-fns";
 import React from "react";
+import Pulse from "react-native-pulse";
 import { useUpdateCurrentUser } from "modules/users/useUpdateCurrentUser";
 import { useCurrentUser } from "modules/users";
 import { useFriends } from "modules/users/useFriends";
+import { Headline } from "react-native-paper";
 
-type Props = {
-  isSharingLocation: boolean;
-  onLocationSharingChange: (value: boolean) => void;
-};
-
-export const DashboardBottomSheet: React.FC<Props> = ({
-  isSharingLocation,
-  onLocationSharingChange,
-}) => {
+export const DashboardBottomSheet: React.FC = () => {
   const { mutateAsync: updateCurrentUser } = useUpdateCurrentUser();
   const { data: currentUser } = useCurrentUser();
   const theme = useTheme();
@@ -42,7 +33,7 @@ export const DashboardBottomSheet: React.FC<Props> = ({
     updateCurrentUser({ isSharingLocation: !currentUser!.isSharingLocation });
   };
 
-  if (!currentUser) return null;
+  console.log("friends", friends);
 
   return (
     <BottomSheet
@@ -50,74 +41,44 @@ export const DashboardBottomSheet: React.FC<Props> = ({
       renderContent={() => (
         <>
           <Content>
-            <Title>People Nearby</Title>
+            <Flexbox align="center" justify="space-between">
+              <Flexbox direction="column">
+                <Title>People Nearby</Title>
+                <Text style={{ color: theme.colors.backdrop }}>
+                  1 Mile Radius
+                </Text>
+              </Flexbox>
+              <Switch
+                value={currentUser!.isSharingLocation}
+                onValueChange={handleToggleLocationSharing}
+              />
+            </Flexbox>
           </Content>
           <Divider />
-          <Content>
-            <Card mode="outlined" style={{ marginTop: 20 }}>
-              <Card.Content>
-                <Flexbox direction="column">
-                  <Flexbox align="center" justify="space-between">
-                    <Flexbox direction="column">
-                      <Subheading>Share My Location</Subheading>
-                      <Paragraph
-                        style={{ marginTop: 3, color: theme.colors.backdrop }}
-                      >
-                        1 Mile Radius
-                      </Paragraph>
-                    </Flexbox>
-                    <Switch
-                      value={currentUser.isSharingLocation}
-                      onValueChange={handleToggleLocationSharing}
-                    />
-                  </Flexbox>
+          {currentUser!.isSharingLocation &&
+            (isLoading || (friends && friends.length === 0)) && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  bottom: 200,
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                <Pulse
+                  color={theme.colors.primary}
+                  numPulses={3}
+                  diameter={200}
+                  speed={20}
+                  duration={2000}
+                />
+              </View>
+            )}
 
-                  <Divider
-                    style={{
-                      alignSelf: "stretch",
-                      marginTop: 20,
-                      marginBottom: 10,
-                    }}
-                  />
-
-                  {isSharingLocation ? (
-                    <Paragraph>
-                      You are currently sharing your location. Once any of your
-                      friends are nearby, they will appear below. At the same
-                      time, you will appear at their list of friends nearby.{" "}
-                      <Paragraph>
-                        The exact location of either party will never be shared.
-                      </Paragraph>
-                    </Paragraph>
-                  ) : (
-                    <Paragraph>
-                      {" "}
-                      You are currently not sharing your location. No one can
-                      see you and you can see no one.
-                    </Paragraph>
-                  )}
-                </Flexbox>
-              </Card.Content>
-            </Card>
-          </Content>
           <ScrollView>
             <Content>
-              {isSharingLocation && isLoading && (
-                <Flexbox justify="center" align="center">
-                  <ActivityIndicator />
-                </Flexbox>
-              )}
-              {isSharingLocation && friends && friends.length == 0 && (
-                <Flexbox direction="column" align="center">
-                  <EmptyStreet />
-                  <Text>Nobody around</Text>
-                  <Text style={{ marginTop: 10 }}>
-                    Once any of your contacts is nearby, they will appear here.
-                  </Text>
-                </Flexbox>
-              )}
-
-              {isSharingLocation &&
+              {currentUser!.isSharingLocation &&
                 friends &&
                 friends.length > 0 &&
                 friends.map((friend) => (
@@ -126,7 +87,7 @@ export const DashboardBottomSheet: React.FC<Props> = ({
                     disabled
                     title={friend.username}
                     description={`Last seen nearby: ${formatDistanceToNow(
-                      new Date(friend.lastSeen)
+                      new Date(friend.locationUpdatedAt)
                     )} ago`}
                   />
                 ))}
