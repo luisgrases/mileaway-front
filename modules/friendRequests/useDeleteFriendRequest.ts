@@ -2,20 +2,22 @@ import { useMutation, useQueryClient } from "react-query";
 
 import { sendRequest } from "utils/sendRequest";
 
-type UseCreateFriendRequestBody = {
-  toId: number;
+type UseDeleteFriendRequestBody = {
+  id: number;
 };
 
-export const useCreateFriendRequest = () => {
+export const useDeleteFriendRequest = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async (body: UseCreateFriendRequestBody) => {
-      return await sendRequest({
-        method: "POST",
-        url: "/friendships",
-        data: body,
+    async (body: UseDeleteFriendRequestBody) => {
+      const response = await sendRequest({
+        method: "DELETE",
+        url: `/friendships/${body.id}`,
       });
+
+      console.log("response", response.status);
+      return response;
     },
     {
       onSuccess: async (data) => {

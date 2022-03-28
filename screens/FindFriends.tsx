@@ -18,6 +18,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useUsers } from "modules/users/useUsers";
 import { useCreateFriendRequest } from "modules/friendRequests/useCreateFriendRequest";
+import { useDeleteFriendRequest } from "modules/friendRequests/useDeleteFriendRequest";
+import { useAcceptFriendRequest } from "modules/friendRequests/useAcceptFriendRequest";
 
 export const FindFriends = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
@@ -35,7 +37,17 @@ export const FindFriends = () => {
     isLoading: isCreatingFriendRequest,
   } = useCreateFriendRequest();
 
-  console.log("results", results);
+  const {
+    mutateAsync: deleteFriendRequest,
+    isLoading: isDeletingFriendRequest,
+  } = useDeleteFriendRequest();
+
+  const {
+    mutateAsync: acceptFriendRequest,
+    isLoading: isAcceptingFriendRequest,
+  } = useAcceptFriendRequest();
+
+  console.log("usersjuahn", results);
 
   return (
     <SafeAreaView>
@@ -87,14 +99,46 @@ export const FindFriends = () => {
                   key={user.username}
                   title={user.username}
                   right={() => {
-                    return (
-                      <Button
-                        loading={isCreatingFriendRequest}
-                        onPress={() => createFriendRequest({ toId: user.id })}
-                      >
-                        Add
-                      </Button>
-                    );
+                    const requestByMe = user.requestsReceived[0];
+                    const requestByThem = user.requestsSent[0];
+
+                    if (requestByMe && !requestByMe.accepted) {
+                      return (
+                        <Button
+                          loading={isDeletingFriendRequest}
+                          onPress={() =>
+                            deleteFriendRequest({ id: requestByMe.id })
+                          }
+                        >
+                          Cancel
+                        </Button>
+                      );
+                    }
+
+                    if (requestByThem && !requestByThem.accepted) {
+                      return (
+                        <Button
+                          loading={isAcceptingFriendRequest}
+                          onPress={() =>
+                            acceptFriendRequest({ id: requestByThem.id })
+                          }
+                        >
+                          Accept
+                        </Button>
+                      );
+                    }
+
+                    if (!requestByThem && !requestByMe) {
+                      return (
+                        <Button
+                          loading={isCreatingFriendRequest}
+                          onPress={() => createFriendRequest({ toId: user.id })}
+                        >
+                          Send Request
+                        </Button>
+                      );
+                    }
+                    return null;
                   }}
                 />
               ))}

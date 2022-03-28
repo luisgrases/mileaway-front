@@ -8,6 +8,8 @@ import { useUpdateCurrentUser } from "modules/users/useUpdateCurrentUser";
 import { SafeAreaView } from "react-native";
 import { useUpdateCurrentUserLocation } from "modules/users/useUpdateCurrentUserLocation";
 
+const LOCATION_UPDATES_ENABLED = false
+
 export function DashboardScreen() {
   const { currentLocation } = useWatchPositionAsync();
 
@@ -15,7 +17,7 @@ export function DashboardScreen() {
     useUpdateCurrentUserLocation();
 
   useEffect(() => {
-    if (currentLocation) {
+    if (currentLocation && LOCATION_UPDATES_ENABLED) {
       updateCurrentUserLocation({
         lat: currentLocation.coords.latitude,
         lng: currentLocation.coords.longitude,

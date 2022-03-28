@@ -2,20 +2,21 @@ import { useMutation, useQueryClient } from "react-query";
 
 import { sendRequest } from "utils/sendRequest";
 
-type UseCreateFriendRequestBody = {
-  toId: number;
+type UseAcceptFriendRequestBody = {
+  id: number;
 };
 
-export const useCreateFriendRequest = () => {
+export const useAcceptFriendRequest = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    async (body: UseCreateFriendRequestBody) => {
-      return await sendRequest({
-        method: "POST",
-        url: "/friendships",
-        data: body,
+    async (body: UseAcceptFriendRequestBody) => {
+      const response = await sendRequest({
+        method: "PUT",
+        url: `/friendships/${body.id}/accept`,
       });
+
+      return response;
     },
     {
       onSuccess: async (data) => {

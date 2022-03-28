@@ -20,20 +20,21 @@ import { useCurrentUser } from "modules/users";
 import { useFriends } from "modules/users/useFriends";
 import { Headline } from "react-native-paper";
 
+const POLLING_ENABLED = false
+
 export const DashboardBottomSheet: React.FC = () => {
   const { mutateAsync: updateCurrentUser } = useUpdateCurrentUser();
   const { data: currentUser } = useCurrentUser();
   const theme = useTheme();
   const { data: friends, isLoading } = useFriends(
     { inRange: true },
-    { refetchInterval: 5000 }
+    { refetchInterval: POLLING_ENABLED ? 5000 : undefined }
   );
 
   const handleToggleLocationSharing = () => {
     updateCurrentUser({ isSharingLocation: !currentUser!.isSharingLocation });
   };
 
-  console.log("friends", friends);
 
   return (
     <BottomSheet

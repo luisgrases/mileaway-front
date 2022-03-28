@@ -3,5 +3,6 @@ declare module "Types" {
     id: number;
     from: User;
     to: User;
+    accepted: boolean;
   };
 }
