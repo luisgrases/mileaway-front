@@ -19,6 +19,7 @@ type Props = {
 
 export const DashboardMap: React.FC<Props> = ({ lat, lon }) => {
   const { data: currentUser } = useCurrentUser();
+
   return (
     <View style={{ position: "relative" }}>
       <MapView

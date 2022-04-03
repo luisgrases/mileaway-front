@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { List, Switch, View } from "components";
+import React, { useEffect, useRef, useState } from "react";
+import { List, Switch, View, Text, SafeAreaView, Button } from "components";
 
 import { DashboardMap } from "screens/DashboardScreen/DashboardMap";
 import { DashboardBottomSheet } from "screens/DashboardScreen/DashboardBottomSheet";
 import { useWatchPositionAsync } from "utils/useWatchPositionAsync";
-import { useUpdateCurrentUser } from "modules/users/useUpdateCurrentUser";
-import { SafeAreaView } from "react-native";
 import { useUpdateCurrentUserLocation } from "modules/users/useUpdateCurrentUserLocation";
+import { AppState, Linking } from "react-native";
 
-const LOCATION_UPDATES_ENABLED = false
+const LOCATION_UPDATES_ENABLED = false;
 
 export function DashboardScreen() {
-  const { currentLocation } = useWatchPositionAsync();
+  const { currentLocation, granted } = useWatchPositionAsync();
 
   const { mutateAsync: updateCurrentUserLocation } =
     useUpdateCurrentUserLocation();
@@ -24,6 +23,20 @@ export function DashboardScreen() {
       });
     }
   }, [currentLocation]);
+
+  console.log("vll");
+
+  if (!granted)
+    return (
+      <>
+        <SafeAreaView>
+          <Text>
+            We need you to go to settings and grant locations to 'Always'
+          </Text>
+          <Button onPress={() => Linking.openURL("app-settings:")}>Open</Button>
+        </SafeAreaView>
+      </>
+    );
 
   if (!currentLocation) return null;
 

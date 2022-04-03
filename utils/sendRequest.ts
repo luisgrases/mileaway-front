@@ -9,6 +9,8 @@ export const sendRequest = async ({
   ...rest
 }: AxiosRequestConfig) => {
   const token = await getItemAsync("session-token");
+
+  console.log("tokennn", token);
   return axios.request({
     url: `${API_URL}${url}`,
     headers: {

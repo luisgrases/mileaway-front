@@ -17,6 +17,7 @@ import { OnboardingNavigator } from "navigation/OnboardingNavigator";
 import { FindFriends } from "screens/FindFriends";
 import { useAuthenticated } from "modules/auth/useAuthenticated";
 import { useCurrentUser } from "modules/users";
+import { ActivityIndicator } from "components";
 
 const CombinedDefaultTheme = {
   ...NavigationDefaultTheme,
@@ -63,12 +64,12 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAuthenticated && !hasCompletedOnboarding && (
+      {isAuthenticated && currentUser && !hasCompletedOnboarding && (
         <>
           <Stack.Screen name="Onboarding" component={OnboardingNavigator} />
         </>
       )}
-      {isAuthenticated && hasCompletedOnboarding && (
+      {isAuthenticated && currentUser && hasCompletedOnboarding && (
         <>
           <Stack.Screen name="Authenticated" component={BottomTabNavigator} />
           <Stack.Screen
@@ -79,7 +80,7 @@ function RootNavigator() {
         </>
       )}
 
-      {!isAuthenticated && (
+      {(!isAuthenticated || !currentUser) && (
         <Stack.Screen name="Login" component={LoginScreen} />
       )}
 

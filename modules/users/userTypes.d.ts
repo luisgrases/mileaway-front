@@ -4,7 +4,7 @@ declare module "Types" {
     username: string;
     isSharingLocation: boolean;
     locationUpdatedAt: string;
-    requestsReceived: FriendRequest[]
-    requestsSent: FriendRequest[]
+    requestsReceived: FriendRequest[];
+    requestsSent: FriendRequest[];
   };
 }

@@ -34,10 +34,7 @@ export const LoginScreen = ({ navigation }: StackScreenProps<any>) => {
 
   const handleLoginClick = async () => {
     await promptAsync();
-    // navigation.replace("Root");
   };
-
-  const fakeLogin = () => {};
 
   return (
     <SafeAreaView>

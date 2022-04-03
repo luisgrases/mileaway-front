@@ -12,22 +12,18 @@ export const useCurrentUser = (
   options?: UseQueryOptions<User>
 ) => {
   const { setIsAuthenticated } = useAuthenticated();
-  return useQuery<User>(
-    ["currentUser"],
-    async () => {
-      try {
-        const response = await sendRequest({
-          method: "GET",
-          url: "/me",
-        });
-        setIsAuthenticated(true);
-        return response.data;
-      } catch (e) {
-        console.error(e);
-        await deleteItemAsync("session-token");
-        setIsAuthenticated(false);
-      }
-    },
-    options
-  );
+  return useQuery<User>(["currentUser"], async () => {
+    try {
+      const response = await sendRequest({
+        method: "GET",
+        url: "/me",
+      });
+      setIsAuthenticated(true);
+      return response.data;
+    } catch (e) {
+      console.error(e);
+      await deleteItemAsync("session-token");
+      setIsAuthenticated(false);
+    }
+  });
 };
