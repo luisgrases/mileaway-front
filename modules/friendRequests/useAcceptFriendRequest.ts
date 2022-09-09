@@ -21,6 +21,7 @@ export const useAcceptFriendRequest = () => {
     {
       onSuccess: async (data) => {
         await queryClient.invalidateQueries(["users"]);
+        await queryClient.invalidateQueries(["currentUser"]);
         return data;
       },
     }

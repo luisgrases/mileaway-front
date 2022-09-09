@@ -4,13 +4,20 @@ import { ScrollView } from "react-native";
 import * as React from "react";
 import { useFriendRequests } from "modules/friendRequests";
 import { useCurrentUser } from "modules/users";
+import { useAcceptFriendRequest } from "modules/friendRequests/useAcceptFriendRequest";
+import { useDeleteFriendRequest } from "modules/friendRequests/useDeleteFriendRequest";
 
 export const FriendRequestList = () => {
   const theme = useTheme();
+  const {
+    mutateAsync: acceptFriendRequest,
+    isLoading: isAcceptingFriendRequest,
+  } = useAcceptFriendRequest();
 
-  const handleAcceptFriendRequest = () => {
-    console.log("accepted");
-  };
+  const {
+    mutateAsync: deleteFriendRequest,
+    isLoading: isDeletingFriendRequest,
+  } = useDeleteFriendRequest();
 
   const { data: currentUser, isLoading } = useCurrentUser();
 
@@ -31,13 +38,22 @@ export const FriendRequestList = () => {
               title={friendRequest.from.username}
               right={() => (
                 <>
-                  <Button mode="contained" onPress={handleAcceptFriendRequest}>
+                  <Button
+                    mode="contained"
+                    loading={isAcceptingFriendRequest}
+                    onPress={() =>
+                      acceptFriendRequest({ id: friendRequest.id })
+                    }
+                  >
                     Accept
                   </Button>
 
                   <Button
                     style={{ marginLeft: 5 }}
-                    onPress={handleAcceptFriendRequest}
+                    loading={isDeletingFriendRequest}
+                    onPress={() =>
+                      deleteFriendRequest({ id: friendRequest.id })
+                    }
                   >
                     Reject
                   </Button>
